@@ -10,6 +10,10 @@ def hello():
 @app.route("/register",methods=['GET','POST'])
 def register():
   if request.method=='POST':
+    print(request.form.get("name"))
+    print(request.form.get("email"))
+    print(request.form.get("dateofbirth"))
+    print(request.form.get("password1"))   
     return redirect("/")
   else:
     return render_template("Register/Register.html")
