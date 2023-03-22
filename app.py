@@ -17,5 +17,12 @@ def register():
     return redirect("/")
   else:
     return render_template("Register/Register.html")
+  
+@app.route("/adminview")
+def admin_view():
+  return render_template("Admin/adminView.html")
+
+
+
 if __name__ == "__main__":
   app.run()
