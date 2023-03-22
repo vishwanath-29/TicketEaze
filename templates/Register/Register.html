@@ -75,7 +75,7 @@
       
                       <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
       
-                      <form class="mx-1 mx-md-4" method="post">
+                      <form class="mx-1 mx-md-4" onsubmit="return submit_action()" method="post"  >
       
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -97,7 +97,7 @@
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example3c">Phone Number</label>
-                            <input type="tel" name="phonenumber" class="form-control" placeholder="Phone Number" required/>
+                            <input type="tel" name="phonenumber" class="form-control" placeholder="Phone Number" pattern="[1-9]{1}[0-9]{9}" required/>
                           </div>
                         </div>
 
@@ -114,6 +114,7 @@
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example4c">Password</label>
                             <input type="password" name="password1" class="form-control" placeholder="Set Your Password" required/>
+                            
                           </div>
                         </div>
       
@@ -122,6 +123,7 @@
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example4cd">Confirm your password</label>
                             <input type="password" name="password2" class="form-control" placeholder="Confirm Password" required/>
+                            <input class="form-check-input me-2" type="checkbox" onclick="show_password()">Show Password
                           </div>
                         </div>
       
@@ -133,7 +135,7 @@
                         </div>
       
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button type="submit" formaction="/register" class="btn btn-secondary disabled btn-md register-btn">Register</button>
+                          <button type="submit" class="btn btn-secondary disabled btn-md register-btn">Register</button>
                         </div>
       
                       </form>
