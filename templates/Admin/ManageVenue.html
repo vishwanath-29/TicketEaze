@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  
+</head>
+<body>
+  <style>
+    body{
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 shadow ">
+        <div class="navbar-brand " href="#">TicketEaze</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active d-block d-lg-none" >
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <!-- <li class="nav-item active d-block d-lg-none" >
+                <a class="nav-link" href="#">Location</a>
+            </li> -->
+            <li class="nav-item active d-block d-lg-none" >
+                <a class="nav-link" href="#">Log Out</a>
+            </li>
+            
+            
+            <!-- <li class="nav-item d-block d-lg-none">
+              <a class="nav-link" href="#">Contact</a>
+            </li>  -->
+            <!-- <li class="list-unstyled mx-3 d-lg-block  d-none">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-danger dropdown-toggle " data-toggle="dropdown" >
+                    Location</button>
+      
+                    <ul class="dropdown-menu ">
+                        <li><a class="dropdown-item" href="#">Chennai</a></li>
+                        <li><a class="dropdown-item" href="#">Mumbai</a></li>
+                        <li><a class="dropdown-item" href="#">Delhi</a></li>
+                        <li><a class="dropdown-item" href="#">Kolkata</a></li>
+                    </ul>
+                    
+                </div>
+            </li> -->
+            <!-- <li class="mx-3 list-unstyled d-lg-block  d-none">
+                <div class="dropdown">
+                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" >
+                  Sign</button>
+                  <ul class="dropdown-menu ">
+                      <li><a class="dropdown-item" href="#">User</a></li>
+                      <li><a class="dropdown-item" href="#">Admin</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="/register/">New User</a></li>
+                  </ul>
+                  
+                </div>  
+              </li> -->
+              <li class="pt-2 nav-item d-none d-lg-block">Hello, Admin</li>
+              <li class="list-unstyled mx-3 d-lg-block  d-none">
+                <button type="button" class="btn btn-secondary">Log Out</button>
+              </li>
+          </ul>
+        </div>
+      </nav>
+
+      <section class="p-lg-5 p-2 mt-4 mt-lg-1">
+        <h2 class="text-center">Venue Management</h2>
+      </section>
+
+
+      <section class="p-lg-5 p-2 ">
+        <div class="container-md h-100 d-sm-flex justify-content-sm-center align-items-sm-center">
+
+          <div class="row p-3 justify-content-between ">
+
+            <div class="card-container col-lg-4 my-3">
+                <a href="./AddVenue.html" class="link link-dark text-decoration-none">
+                <div class="card p-lg-3 p-md-2 p-sm-2 p-1">
+                  <img src="/static/Images/add-venue-img.jpg" alt="Image 1" class="card-img-top rounded-1">
+                  <div class="card-body">
+                    <h4 class="card-title text-center">Add a New Venue</h4>
+                    <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p> -->
+                    <!-- <a href="#" class="btn btn-primary">Read More</a> -->
+                  </div>
+                </div> 
+              </a>
+            </div>
+
+            <div class="card-container col-lg-4  my-3">
+                <a href="#" class="link link-dark text-decoration-none">
+                    <div class="card p-lg-3 p-md-2 p-sm-2 p-1">
+                        <img src="/static/Images/edit-venue-img .jpg" alt="Image 1" class="card-img-top rounded-1">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Edit Venue Details</h4>
+                    <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p> -->
+                    <!-- <a href="#" class="btn btn-primary">Read More</a> -->
+                        </div>
+                    </div> 
+                </a>
+            </div>
+
+            <div class="card-container col-lg-4  my-3">
+                <a href="#" class="link link-dark text-decoration-none">
+                    <div class="card p-lg-3 p-md-2 p-sm-2 p-1">
+                        <img src="/static/Images/remove-venue-img.jpg" alt="Image 1" class="card-img-top rounded-1">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Remove an Venue</h4>
+                    <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p> -->
+                    <!-- <a href="#" class="btn btn-primary">Read More</a> -->
+                        </div>
+                    </div> 
+                </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+      
+
+
+
+
+      
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
+</body>
+</html>
