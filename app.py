@@ -1,5 +1,6 @@
 from flask import Flask, render_template , request , redirect
 from models import user,venue,show,userbooking,showinvenue,db
+import hashlib
 
 app = Flask(__name__)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketeaze.db'
@@ -20,10 +21,12 @@ def hello():
 @app.route("/register",methods=['GET','POST'])
 def register():
   if request.method=='POST':
-    print(request.form.get("name"))
-    print(request.form.get("email"))
-    print(request.form.get("dateofbirth"))
-    print(request.form.get("password1"))   
+    name=request.form.get("name")
+    email=request.form.get("email")
+    dateofbirth=request.form.get("dateofbirth")
+    password=request.form.get("password1")
+    password=hashlib.sha256(password.encode()).hexdigest()
+    print(name+email+dateofbirth+password)
     return redirect("/")
   else:
     return render_template("Register/Register.html")
