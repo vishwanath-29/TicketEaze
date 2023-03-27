@@ -8,22 +8,12 @@ db.init_app(app)
 
 @app.before_first_request  
 def create_tables():
+    db.metadata.clear()
     db.create_all()
 
 #Home page and Route 
 @app.route("/")
 def hello():
-
-  student = students(name='Vishwanath', city='Chennai',addr='Chennai',pin= '600064')
-  print(student)
-  print(db)
-  db.session.add(student)
-  db.session.commit()
-  users = students.query.all()
-  
-  for i in users:
-    print(i.name)
-   
   return render_template('Home/Home.html')
 
 #Register Route and Method
@@ -39,9 +29,27 @@ def register():
     return render_template("Register/Register.html")
   
 @app.route("/management")
-def admin_view():
+def management():
   return render_template("Admin/Management.html")
 
+  
+@app.route("/management/venue")
+def managevenue():
+  return render_template("Admin/ManageVenue.html")
+
+  
+@app.route("/management/event")
+def manageevent():
+  return render_template("Admin/ManageEvent.html")
+
+  
+@app.route("/management/event/add")
+def addevent():
+  return render_template("Admin/AddEvent.html")
+
+@app.route("/management/venue/add")
+def addvenue():
+  return render_template("Admin/AddVenue.html")
 
 if __name__ == "__main__":
   app.run(debug=True)
