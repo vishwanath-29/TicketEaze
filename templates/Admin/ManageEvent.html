@@ -1,44 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  
-</head>
-<body>
-  <style>
-    body{
-      font-family: 'Roboto', sans-serif;
-    }
-  </style>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 shadow ">
-        <div class="navbar-brand " href="#">TicketEaze</div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active d-block d-lg-none" >
-              <a class="nav-link" href="#">Home</a>
-            </li>
-           
-            <li class="nav-item active d-block d-lg-none" >
-                <a class="nav-link" href="#">Log Out</a>
-            </li>
-            
-            
-            
-              <li class="pt-2 nav-item d-none d-lg-block">Hello, Admin</li>
-              <li class="list-unstyled mx-3 d-lg-block  d-none">
-                <button type="button" class="btn btn-secondary">Log Out</button>
-              </li>
-          </ul>
-        </div>
-      </nav>
+{% extends "./Layouts/layout.html" %}
+
+
+{% block content %}
+
+{% include "./Layouts/navbarAdmin.html" %}
+
+{% block manageEvent %}
+
 
       <section class="p-lg-5 p-2 mt-4 mt-lg-1">
         <h1 class="text-center">Event Management</h1>
@@ -90,13 +58,6 @@
       </section>
       
 
+{% endblock manageEvent %}
+{% endblock content %}
 
-
-
-      
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    
-</body>
-</html>
