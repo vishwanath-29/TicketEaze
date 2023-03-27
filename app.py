@@ -17,6 +17,14 @@ def create_tables():
 def hello():
   return render_template('Home/Home.html')
 
+@app.route("/login/user")
+def user_login():
+  return render_template("Register/UserLogin.html")
+
+@app.route("/login/admin")
+def admin_login():
+  return render_template("Register/AdminLogin.html")
+
 #Register Route and Method
 @app.route("/register",methods=['GET','POST'])
 def register():

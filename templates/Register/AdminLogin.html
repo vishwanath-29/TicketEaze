@@ -2,8 +2,22 @@
 
 {% block content %}
 {% include "./Layouts/navBarWithoutLogin.html" %}
-{% block loginForm %}
+{% block adminLoginForm %}
+    
 
+<section>
+
+    <div class="container p-2">
+      <div class="title mt-2 ">
+
+        <div class="text-center h1 fw-bold mx-1 mx-md-4 mt-4">Admin Login</div>
+      </div>
+    </div>
+
+
+</section>
+    
+    
     <section class="p-5 bg-white" >
         <div class="container h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -18,7 +32,7 @@
 
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
       
-                      <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                      <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
       
                       <form class="mx-1 mx-md-4" onsubmit="return submit_action()" method="post"  >
       
@@ -40,7 +54,7 @@
                           <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example4c">Password</label>
-                            <input type="password" name="password1" class="form-control" placeholder="Set Your Password" required/>
+                            <input type="password" name="password1" class="form-control" placeholder="Enter Your Password" required/>
                             
                           </div>
                         </div>
@@ -50,7 +64,7 @@
                         
       
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button type="submit" class="btn btn-md btn-primary register-btn">Login</button>
+                          <button type="submit" class="btn btn-md btn-secondary register-btn">Login</button>
                         </div>
       
                       </form>
@@ -65,5 +79,5 @@
         </div>
       </section>
 
-{% endblock loginFomr %}
+{% endblock adminLoginForm %}
 {% endblock content %}
