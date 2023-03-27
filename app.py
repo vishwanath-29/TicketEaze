@@ -1,5 +1,5 @@
 from flask import Flask, render_template , request , redirect
-from models import students,db
+from models import user,venue,show,userbooking,showinvenue,db
 
 app = Flask(__name__)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketeaze.db'
