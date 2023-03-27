@@ -1,9 +1,29 @@
 from flask import Flask, render_template , request , redirect
+from models import students,db
+
 app = Flask(__name__)
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketeaze.db'
+
+db.init_app(app)
+
+@app.before_first_request  
+def create_tables():
+    db.create_all()
 
 #Home page and Route 
 @app.route("/")
 def hello():
+
+  student = students(name='Vishwanath', city='Chennai',addr='Chennai',pin= '600064')
+  print(student)
+  print(db)
+  db.session.add(student)
+  db.session.commit()
+  users = students.query.all()
+  
+  for i in users:
+    print(i.name)
+   
   return render_template('Home/Home.html')
 
 #Register Route and Method
@@ -18,11 +38,11 @@ def register():
   else:
     return render_template("Register/Register.html")
   
-@app.route("/adminview")
+@app.route("/management")
 def admin_view():
-  return render_template("Admin/adminView.html")
-
+  return render_template("Admin/Management.html")
 
 
 if __name__ == "__main__":
-  app.run()
+  app.run(debug=True)
+
