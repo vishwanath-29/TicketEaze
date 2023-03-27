@@ -27,17 +27,16 @@ function show_password() {
     }
   }
 function submit_action(){
-    var passw = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+    var passw = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     var password1 = String(document.getElementsByName("password1")[0].value)
     var password2 = String(document.getElementsByName("password2")[0].value)
     if (password1==password2)
         {
             try{
-                console.log(password1+"   "+password2)
                 if (passw.test(password1)) 
             {
                 console.log("Good ")
-                return false
+                return true
             }
             else
             {
