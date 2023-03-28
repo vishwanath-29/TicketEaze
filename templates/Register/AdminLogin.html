@@ -55,7 +55,7 @@
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example4c">Password</label>
                             <input type="password" name="password1" class="form-control" placeholder="Enter Your Password" required/>
-                            
+                            <input class="form-check-input me-2" type="checkbox" onclick="show_password_login()">Show Password
                           </div>
                         </div>
       
@@ -78,6 +78,6 @@
           </div>
         </div>
       </section>
-
+      <script src="{{ url_for('static', filename='scripts/Register.js') }}"></script>
 {% endblock adminLoginForm %}
 {% endblock content %}
