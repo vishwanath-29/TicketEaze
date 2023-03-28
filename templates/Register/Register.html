@@ -2,7 +2,12 @@
 {% block content %}
 {% include "./Layouts/navBarWithoutLogin.html" %}
 {% block registerForm %}
-
+{% if status==1 %}
+<div> {{ status }} </div>
+<script>
+    alert("Email Already Registered");
+  </script>  
+{% endif %}
       <section class="p-5 bg-white" >
         <div class="container h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">

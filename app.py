@@ -1,10 +1,26 @@
 from flask import Flask, render_template , request , redirect
+from flask_login import UserMixin,login_user,LoginManager,current_user,logout_user,login_required
+from flask_migrate import Migrate
+
 from models import *
 import hashlib,datetime
+
+# Intialization and Configs 
 app = Flask(__name__)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketeaze.db'
-
+app.config['SECRET_KEY'] = 'secret-key'
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "login"
+login_manager.login_message_category = "info"
+login_manager.init_app(app)
+migrate = Migrate()
+migrate.init_app(app, db)
 db.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return user.query.get(int(user_id))
 
 @app.before_first_request  
 def create_tables():
@@ -39,10 +55,13 @@ def register():
     phonenumber=request.form.get("phonenumber")
     password=request.form.get("password1")
     password=hashlib.sha256(password.encode()).hexdigest()
-    user_details = user(name=name, email=email,dateofbirth=dateofbirth,phonenumber=phonenumber,password=password)
-    db.session.add(user_details)
-    db.session.commit()
-    return redirect("/")
+    if user.query.filter_by(email=email).first():
+      return render_template("Register/Register.html",status=1)  
+    else:
+      user_details = user(name=name, email=email,dateofbirth=dateofbirth,phonenumber=phonenumber,password=password)
+      db.session.add(user_details)
+      db.session.commit()  
+      return redirect("/")
   else:
     return render_template("Register/Register.html")
   
