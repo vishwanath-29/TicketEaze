@@ -15,9 +15,14 @@ def create_tables():
 def hello():
   return render_template('Home/Home.html')
 
-@app.route("/login/user")
+@app.route("/login/user",methods=['GET','POST'])
 def user_login():
-  return render_template("Register/UserLogin.html")
+  if request.method=='POST':
+    print("Hello")
+  else:
+     return render_template("Register/UserLogin.html")
+
+ 
 
 @app.route("/login/admin")
 def admin_login():
