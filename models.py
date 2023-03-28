@@ -55,6 +55,7 @@ class venue(db.Model):
    city = db.Column(db.String(50))  
    capacity = db.Column(db.String(200))
    pincode = db.Column(db.String(10))
+   venuetype = db.Column(db.String(10))
    showshosted = db.relationship('show',secondary=showinvenue, backref='showshosted')
 
    def __init__(self, name, city, capacity ,pincode):
