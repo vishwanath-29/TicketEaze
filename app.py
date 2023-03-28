@@ -1,7 +1,6 @@
 from flask import Flask, render_template , request , redirect
-from models import user,venue,show,userbooking,showinvenue,db
-import hashlib
-
+from models import *
+import hashlib,datetime
 app = Flask(__name__)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketeaze.db'
 
@@ -9,7 +8,6 @@ db.init_app(app)
 
 @app.before_first_request  
 def create_tables():
-    db.metadata.clear()
     db.create_all()
 
 #Home page and Route 
@@ -32,9 +30,13 @@ def register():
     name=request.form.get("name")
     email=request.form.get("email")
     dateofbirth=request.form.get("dateofbirth")
+    dateofbirth=datetime.datetime.strptime(dateofbirth, "%Y-%m-%d").date()
+    phonenumber=request.form.get("phonenumber")
     password=request.form.get("password1")
     password=hashlib.sha256(password.encode()).hexdigest()
-    print(name+email+dateofbirth+password)
+    user_details = user(name=name, email=email,dateofbirth=dateofbirth,phonenumber=phonenumber,password=password)
+    db.session.add(user_details)
+    db.session.commit()
     return redirect("/")
   else:
     return render_template("Register/Register.html")
