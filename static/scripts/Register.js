@@ -17,6 +17,7 @@ checkbox.addEventListener("change",()=>{
 })
 function show_password() {
     var password1 = document.getElementsByName("password1")[0];
+    
     var password2 = document.getElementsByName("password2")[0];
     if (password1.type === "password") {
       password1.type = "text";
@@ -26,6 +27,13 @@ function show_password() {
       password2.type = "password";
     }
   }
+function show_password_login(){
+    var password= document.getElementsByName("password")[0];
+    if (password.type === "password") 
+        password.type = "text";
+    else 
+        password.type = "password";
+}
 function submit_action(){
     var passw = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     var password1 = String(document.getElementsByName("password1")[0].value)
