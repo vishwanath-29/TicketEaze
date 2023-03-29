@@ -1,3 +1,4 @@
+
 {% extends "./Layouts/layout.html" %}
 {% block content %}
 {% include "./Layouts/navBarWithoutLogin.html" %}
@@ -138,3 +139,9 @@
 </section>
 {% endblock events %}
 {% endblock content %}
+
+
+<!--  User Logged in If 
+  {% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+{% endif %} -->
