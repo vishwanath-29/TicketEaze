@@ -34,7 +34,14 @@ def hello():
 @app.route("/login/user",methods=['GET','POST'])
 def user_login():
   if request.method=='POST':
-    print("Hello")
+    email=request.form.get("email")
+    password=request.form.get("password")
+    password=hashlib.sha256(password.encode()).hexdigest()
+    user_login = user.query.filter_by(email=email).first()
+    print("Password:" +password+"\n"+"\nHash: "+user_login.password)
+    if user:
+            if(user_login.password==password):
+                login_user(user)         
   else:
      return render_template("Register/UserLogin.html")
 
@@ -66,25 +73,30 @@ def register():
     return render_template("Register/Register.html")
   
 @app.route("/management")
+@login_required
 def management():
   return render_template("Admin/Management.html")
 
   
 @app.route("/management/venue")
+@login_required
 def managevenue():
   return render_template("Admin/ManageVenue.html")
 
   
 @app.route("/management/event")
+@login_required
 def manageevent():
   return render_template("Admin/ManageEvent.html")
 
   
 @app.route("/management/event/add")
+@login_required
 def addevent():
   return render_template("Admin/AddEvent.html")
 
 @app.route("/management/venue/add")
+@login_required
 def addvenue():
   return render_template("Admin/AddVenue.html")
 
