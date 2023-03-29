@@ -38,10 +38,12 @@ def user_login():
     password=request.form.get("password")
     password=hashlib.sha256(password.encode()).hexdigest()
     user_login = user.query.filter_by(email=email).first()
-    print("Password:" +password+"\n"+"\nHash: "+user_login.password)
-    if user:
+    
+    if user_login:
             if(user_login.password==password):
-                login_user(user)         
+                login_user(user_login) 
+                print(user_login)
+                return render_template("Home/Home.html")        
   else:
      return render_template("Register/UserLogin.html")
 

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
@@ -32,7 +33,7 @@ class show(db.Model):
 
 
 # User Model
-class user(db.Model):
+class user(UserMixin,db.Model):
    id = db.Column( db.Integer, primary_key = True)
    name = db.Column(db.String(100))
    email = db.Column(db.String(100))
@@ -47,6 +48,7 @@ class user(db.Model):
     self.phonenumber = phonenumber
     self.dateofbirth = dateofbirth
     self.password = password
+    
 
 # Venue Model
 class venue(db.Model):
