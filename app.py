@@ -43,7 +43,7 @@ def user_login():
             if(user_login.password==password):
                 login_user(user_login) 
                 print(user_login)
-                return render_template("Home/Home.html")        
+                return redirect("/")        
   else:
      return render_template("Register/UserLogin.html")
 
