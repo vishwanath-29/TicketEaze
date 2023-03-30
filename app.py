@@ -9,6 +9,7 @@ import hashlib,datetime
 app = Flask(__name__)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketeaze.db'
 app.config['SECRET_KEY'] = 'secret-key'
+app.config['PERMANENT_SESSION_LIFETIME'] = 0
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "login"
@@ -49,8 +50,20 @@ def user_login():
 
  
 
-@app.route("/login/admin")
+@app.route("/login/admin",methods=['GET','POST'])
 def admin_login():
+  if request.method=='POST':
+    print("hello")
+    email=request.form.get("email")
+    password=request.form.get("password")
+    password=hashlib.sha256(password.encode()).hexdigest()
+    admin_login = db.session.query(admin).filter_by(email=email).first()
+    print(admin_login)
+    if admin_login:
+            if(admin_login.password==password):
+                login_user(admin_login) 
+                print(admin_login)
+                return redirect("/management")
   return render_template("Register/AdminLogin.html")
 
 #Register Route and Method
