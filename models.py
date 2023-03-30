@@ -68,3 +68,16 @@ class venue(db.Model):
 
 
 
+# Admin Model
+class admin(UserMixin,db.Model):
+   id = db.Column( db.Integer, primary_key = True)
+   name = db.Column(db.String(100))
+   email = db.Column(db.String(100))
+   phonenumber = db.Column(db.String(12))  
+   password = db.Column(db.String(257))
+
+   def __init__(self, name,email,phonenumber,password):
+    self.name = name
+    self.email =email
+    self.phonenumber = phonenumber
+    self.password = password
