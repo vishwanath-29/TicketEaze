@@ -98,7 +98,7 @@ def logout():
     logout_user()
     if session.get('was_once_logged_in'):
         del session['was_once_logged_in']
-    flash('You have successfully logged yourself out.')
+    flash('Have successfully logged out!')
     return redirect('/')
 
 
