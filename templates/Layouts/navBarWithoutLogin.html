@@ -34,7 +34,7 @@
             </div>
         </li>
         {% if current_user.is_authenticated %}
-        <button class="btn btn-secondary">Logout</button>
+        <button class="btn btn-secondary" onclick="location.href='/logout'" >Logout</button>
         <div class="user_name mx-2 mt-2 h6">Hi {{ current_user.name }}!</div>
         <!-- <li class="mx-3 list-unstyled d-lg-block  d-none">
           <div class="dropdown">
