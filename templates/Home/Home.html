@@ -3,6 +3,11 @@
 {% block content %}
 {% include "./Layouts/navBarWithoutLogin.html" %}
 {% block carousel %}
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+      <script> alert("{{ message }}") </script>
+    {% endfor %}
+{% endwith %}  
 <section class="w-100  bg-white p-5">
   <div id="carouselExampleCaptions" class="carousel slide w-75 m-auto">
       <div class="carousel-indicators">
