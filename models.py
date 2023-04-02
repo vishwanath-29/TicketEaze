@@ -1,6 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
+from flask import redirect ,session
+from flask_login import current_user
+from functools import wraps
 
 db = SQLAlchemy()
 
@@ -81,3 +84,15 @@ class admin(UserMixin,db.Model):
     self.email =email
     self.phonenumber = phonenumber
     self.password = password
+
+
+def admin_login_required(f):
+    @wraps(f)
+    def decorated_func(*args, **kwargs):
+        if not current_user.is_anonymous :
+          if session['user_type']=='admin':
+              return f(*args, **kwargs)
+          else:
+              return redirect("/")
+        return redirect("/")
+    return decorated_func
