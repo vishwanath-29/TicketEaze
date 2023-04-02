@@ -1,12 +1,13 @@
-from flask import Flask, render_template , request , redirect ,session ,flash
+from flask import Flask, render_template , request , redirect ,session ,flash,url_for
 from flask_login import login_user,LoginManager,current_user,logout_user,login_required
 from flask_migrate import Migrate
 from flask_session import Session
-
+from werkzeug.utils import secure_filename
 
 from models import *
 from datetime import timedelta
 import hashlib,datetime
+import os
 
 
 # Intialization and Configs 
@@ -19,6 +20,11 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+# File Uploads Configs 
+UPLOAD_FOLDER = './static/file_uploads'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Login Manager Configs
 login_manager = LoginManager()
@@ -47,9 +53,13 @@ def init():
     db.create_all()
 
 # Home page and Route 
-@app.route("/")
+@app.route("/",methods=['GET','POST'])
 def home():
-  return render_template('Home/Home.html')
+  if request.method == 'POST':
+        f = request.files['venue_img']
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
+  return render_template('Home/file.html')
 
 # Register Route and Method
 @app.route("/register",methods=['GET','POST'])
@@ -154,31 +164,7 @@ if __name__ == "__main__":
   app.run(debug=True)
 
 
-# import os
-# from flask import Flask, flash, request, redirect, url_for
-# from werkzeug.utils import secure_filename
-
-# UPLOAD_FOLDER = '/path/to/the/uploads'
-# ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-
-# app = Flask(__name__)
-# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# def upload_file():
-#     if request.method == 'POST':
-#         # check if the post request has the file part
-#         if 'file' not in request.files:
-#             flash('No file part')
-#             return redirect(request.url)
-#         file = request.files['file']
-#         # if user does not select file, browser also
-#         # submit a empty part without filename
-#         if file.filename == '':
-#             flash('No selected file')
-#             return redirect(request.url)
-#         if file and allowed_file(file.filename):
-#             filename = secure_filename(file.filename)
-#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    
 
 
 
