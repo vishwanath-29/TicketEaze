@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request , redirect
+from flask import Flask, render_template , request , redirect ,session
 from flask_login import UserMixin,login_user,LoginManager,current_user,logout_user,login_required
 from flask_migrate import Migrate
 
@@ -10,6 +10,8 @@ app = Flask(__name__)
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ticketeaze.db'
 app.config['SECRET_KEY'] = 'secret-key'
 app.config['PERMANENT_SESSION_LIFETIME'] = 0
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "login"
@@ -19,12 +21,19 @@ migrate = Migrate()
 migrate.init_app(app, db)
 db.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
-    return user.query.get(int(user_id))
+        if session['user_type']=='user':
+          record = user.query.get(int(user_id))
+        elif session['user_type']=='admin':
+          record = admin.query.get(int(user_id))
+        return record
+
 
 @app.before_first_request  
-def create_tables():
+def init():
+    logout_user()
     db.create_all()
 
 #Home page and Route 
@@ -42,8 +51,8 @@ def user_login():
     
     if user_login:
             if(user_login.password==password):
+                session['user_type'] = 'user'
                 login_user(user_login) 
-                print(user_login)
                 return redirect("/")        
   else:
      return render_template("Register/UserLogin.html")
@@ -53,16 +62,14 @@ def user_login():
 @app.route("/login/admin",methods=['GET','POST'])
 def admin_login():
   if request.method=='POST':
-    print("hello")
     email=request.form.get("email")
     password=request.form.get("password")
     password=hashlib.sha256(password.encode()).hexdigest()
     admin_login = db.session.query(admin).filter_by(email=email).first()
-    print(admin_login)
     if admin_login:
             if(admin_login.password==password):
+                session['user_type'] = 'admin'
                 login_user(admin_login) 
-                print(admin_login)
                 return redirect("/management")
   return render_template("Register/AdminLogin.html")
 
@@ -94,7 +101,6 @@ def management():
 
   
 @app.route("/management/venue")
-@login_required
 def managevenue():
   return render_template("Admin/ManageVenue.html")
 
@@ -117,4 +123,32 @@ def addvenue():
 
 if __name__ == "__main__":
   app.run(debug=True)
+
+
+import os
+from flask import Flask, flash, request, redirect, url_for
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = '/path/to/the/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
 
