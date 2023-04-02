@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request , redirect ,session
+from flask import Flask, render_template , request , redirect ,session ,flash
 from flask_login import UserMixin,login_user,LoginManager,current_user,logout_user,login_required
 from flask_migrate import Migrate
 
@@ -41,38 +41,6 @@ def init():
 def hello():
   return render_template('Home/Home.html')
 
-@app.route("/login/user",methods=['GET','POST'])
-def user_login():
-  if request.method=='POST':
-    email=request.form.get("email")
-    password=request.form.get("password")
-    password=hashlib.sha256(password.encode()).hexdigest()
-    user_login = user.query.filter_by(email=email).first()
-    
-    if user_login:
-            if(user_login.password==password):
-                session['user_type'] = 'user'
-                login_user(user_login) 
-                return redirect("/")        
-  else:
-     return render_template("Register/UserLogin.html")
-
- 
-
-@app.route("/login/admin",methods=['GET','POST'])
-def admin_login():
-  if request.method=='POST':
-    email=request.form.get("email")
-    password=request.form.get("password")
-    password=hashlib.sha256(password.encode()).hexdigest()
-    admin_login = db.session.query(admin).filter_by(email=email).first()
-    if admin_login:
-            if(admin_login.password==password):
-                session['user_type'] = 'admin'
-                login_user(admin_login) 
-                return redirect("/management")
-  return render_template("Register/AdminLogin.html")
-
 #Register Route and Method
 @app.route("/register",methods=['GET','POST'])
 def register():
@@ -93,7 +61,47 @@ def register():
       return redirect("/")
   else:
     return render_template("Register/Register.html")
-  
+
+@app.route("/login/user",methods=['GET','POST'])
+def user_login():
+  if request.method=='POST':
+    email=request.form.get("email")
+    password=request.form.get("password")
+    password=hashlib.sha256(password.encode()).hexdigest()
+    user_login = user.query.filter_by(email=email).first()
+    
+    if user_login:
+            if(user_login.password==password):
+                session['user_type'] = 'user'
+                login_user(user_login) 
+                return redirect("/")        
+  else:
+     return render_template("Register/UserLogin.html")
+
+@app.route("/login/admin",methods=['GET','POST'])
+def admin_login():
+  if request.method=='POST':
+    email=request.form.get("email")
+    password=request.form.get("password")
+    password=hashlib.sha256(password.encode()).hexdigest()
+    admin_login = db.session.query(admin).filter_by(email=email).first()
+    if admin_login:
+            if(admin_login.password==password):
+                session['user_type'] = 'admin'
+                login_user(admin_login) 
+                return redirect("/management")
+  return render_template("Register/AdminLogin.html")
+
+ 
+@app.route('/logout')
+def logout():
+    logout_user()
+    if session.get('was_once_logged_in'):
+        del session['was_once_logged_in']
+    flash('You have successfully logged yourself out.')
+    return redirect('/')
+
+
 @app.route("/management")
 @login_required
 def management():
