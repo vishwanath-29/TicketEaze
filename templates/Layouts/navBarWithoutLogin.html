@@ -34,8 +34,22 @@
             </div>
         </li>
         {% if current_user.is_authenticated %}
-        <button class="btn btn-secondary" onclick="location.href='/logout'" >Logout</button>
-        <div class="user_name mx-2 mt-2 h6">Hi {{ current_user.name }}!</div>
+        <li class="list-unstyled mx-3 d-lg-block  d-none">
+          <div class="dropdown">
+              <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" >
+              Profile</button>
+
+              <ul class="dropdown-menu ">
+                  <li class="dropdown-item"><b>Hi {{current_user.name}} !</b></li>
+                  <li><a class="dropdown-item" href="#">My Orders</a></li>
+                  <li><a class="dropdown-divider" href="#"></a></li>
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+              </ul>
+              
+          </div>
+      </li>
+        <!-- <button class="btn btn-secondary" onclick="location.href='/logout'" >Logout</button>
+        <div class="user_name mx-2 mt-2 h6">Hi {{ current_user.name }}!</div> -->
         <!-- <li class="mx-3 list-unstyled d-lg-block  d-none">
           <div class="dropdown">
             <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" >
