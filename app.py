@@ -205,7 +205,22 @@ def addvenue():
 @app.route("/management/event/remove",methods=['GET','POST'])
 @admin_login_required
 def removeevent():
-   return render_template("Admin/RemoveEvent.html")
+   if request.method=='POST':
+      # Getting Event Id from request
+      event_id=request.form.get('event_id')
+      # Deleting the Event based of ID
+      show.query.filter_by(id=event_id).delete()
+      # Deleting Values in Helper Table and Shows in Venue
+      d = delete(showinvenue).where(showinvenue.c.show_id == event_id)
+      db.session.execute(d)
+      db.session.commit()
+      # Getting the new Events List
+      events = db.session.query(show).all()
+      message="Have successfully Deleted 👍!"
+      # Sending Message and re-rendering
+      return render_template("Admin/RemoveEvent.html",events=events,message=message)
+   events = db.session.query(show).all()
+   return render_template("Admin/RemoveEvent.html",events=events)
 
 # Deletion of Venue
 @app.route("/management/venue/remove",methods=['GET','POST'])
