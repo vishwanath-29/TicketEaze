@@ -1,3 +1,4 @@
+
 {% extends "./Layouts/layout.html" %}
 
 {% block content %}
@@ -18,7 +19,7 @@
       
                       <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Event Addition</p>
       
-                      <form class="mx-1 mx-md-4" action="/management/venue/add" method="post"  enctype="multipart/form-data ">
+                      <form class="mx-1 mx-md-4" action="/management/event/add" method="post"  enctype="multipart/form-data ">
       
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -72,16 +73,15 @@
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example3c">Event Venue</label>
                             <br>
-                            <select class="dropdown rounded-3 px-3 py-1" name="Event Type" id="event_type">
+                            <select class="dropdown rounded-3 px-3 py-1" name="event_venue" id="event_venue">
                               <option value="--select--"> --Select--</option>
-                              <option value="Movie">Dummy 1</option>
-                              <option value="Comedy Shows">Dummy 2</option>
-                              <option value="Music Concerts">DUmmy 3</option>
+                              {% for i in venues %}
+                              <option value="{{ i.id }} "> {{i.name}}</option>
+                              {% endfor %}
                             </select>
                           </div>
                         </div>
 
-                        
 
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
