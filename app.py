@@ -262,20 +262,6 @@ def editevent():
 def editvenue():
   return render_template("Admin/EditVenue.html")
 
-<<<<<<< HEAD
-=======
-@app.route("/management/event/remove")
-@admin_login_required
-def removeevent():
-   return render_template("Admin/RemoveEvent.html")
-
-@app.route("/management/venue/remove")
-@admin_login_required
-def removevenue():
-   return render_template("Admin/RemoveVenue.html")
-
-
->>>>>>> e737169 (Created function for ticket_booking)
 
 
 @app.route("/event/booktickets")
