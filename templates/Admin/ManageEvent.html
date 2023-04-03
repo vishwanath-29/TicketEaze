@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% include "./Layouts/navbarAdmin.html" %}
+{% include "./Layouts/navBarAdmin.html" %}
 
 {% block manageEvent %}
 
@@ -18,7 +18,7 @@
           <div class="row p-3 justify-content-between ">
 
             <div class="card-container col-lg-4 my-3">
-                <a href="./AddEvent.html" class="link link-dark text-decoration-none">
+                <a href="/management/event/add" class="link link-dark text-decoration-none">
                 <div class="card p-lg-3 p-md-2 p-sm-2 p-1">
                   <img src="/static/Images/add-event-img.jpg" alt="Image 1" class="card-img-top rounded-1">
                   <div class="card-body">
@@ -30,7 +30,7 @@
             </div>
 
             <div class="card-container col-lg-4  my-3">
-                <a href="#" class="link link-dark text-decoration-none">
+                <a href="management/event/edit" class="link link-dark text-decoration-none">
                     <div class="card p-lg-3 p-md-2 p-sm-2 p-1">
                         <img src="/static/Images/edit2-event-img.jpg" alt="Image 1" class="card-img-top rounded-1">
                         <div class="card-body">
@@ -42,7 +42,7 @@
             </div>
 
             <div class="card-container col-lg-4  my-3">
-                <a href="#" class="link link-dark text-decoration-none">
+                <a href="/management/event/remove" class="link link-dark text-decoration-none">
                     <div class="card p-lg-3 p-md-2 p-sm-2 p-1">
                         <img src="/static/Images/remove-event-img.jpg" alt="Image 1" class="card-img-top rounded-1">
                         <div class="card-body">
