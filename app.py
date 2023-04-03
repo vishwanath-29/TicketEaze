@@ -277,6 +277,13 @@ def removevenue():
 
 >>>>>>> e737169 (Created function for ticket_booking)
 
+
+@app.route("/event/booktickets")
+@login_required
+def ticket_booking():
+   return render_template("Events/EventPage.html")
+
+
 if __name__ == "__main__":
   app.run(debug=True)
 
