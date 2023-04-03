@@ -156,18 +156,19 @@ def addevent():
      event_name=request.form.get("event_name")
      event_desc=request.form.get("event_desc")
      tags=request.form.get("event_tags")
-     event_location=request.form.get("event_loc")
      event_venue=request.form.get("event_venue")
-     event_img=request.files["event_img"]
-     filename = secure_filename(f.filename)
-     ticket_price=request.form.get("event_price")
+     event_price=request.form.get("event_price")
+     event_location=db.session.query(venue).filter_by(id=event_venue).first().city
      event_capacity=request.form.get("event_capacity")
-
-     print(event_name)
-     print(event_desc)
-     print(event_location)
-
-  return render_template("Admin/AddEvent.html")
+     event_details = show(name=event_name,description=event_desc,location=event_location,capacity=event_capacity,price=event_price,tags=tags)
+     venue_details=db.session.query(venue).filter_by(id=event_venue).first()
+     event_details.showshosted.append(venue_details)
+     db.session.add(event_details)
+     db.session.commit() 
+     db.session.flush() 
+     print(event_details.id)
+  venues = db.session.query(venue).all()
+  return render_template("Admin/AddEvent.html",venues=venues)
 
 @app.route("/management/venue/add",methods=['GET','POST'])
 @admin_login_required
