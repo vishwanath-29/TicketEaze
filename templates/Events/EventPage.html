@@ -1,0 +1,66 @@
+{% extends "./Layouts/layout.html" %}
+
+{% block content %}
+
+{% include "./Layouts/navBarAdmin.html" %}
+
+{% block ticketBooking %}
+
+
+      <section class="p-5 bg-white mt-5 " >
+        <div class="container h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black vh-50" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-6 col-xl-4 d-flex align-items-center order-1 order-lg-1 justify-content-center justify-content-lg-start">
+                        <img src="/static/Images/login-img.webp" style="height:300px; width:300px;" class="img-fluid" alt="Sample image">
+                    </div>
+
+                    <div class="col-md-10 col-lg-6 col-xl-8 order-2 order-lg-2 ">
+      
+                      <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Event Name</p>
+      
+                      <!-- <form class="mx-1 mx-md-4" action="#" method="post"  > -->
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <div class="desc">Event Description Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi nihil, ratione laboriosam asperiores dolor debitis.</div>
+                        </div>
+     
+                        <div class="d-flex flex-row align-items-center justify-content-center mb-4">
+                                <div class="tickets mx-2 h5">Number of Tickets: </div>
+                                <div class="ticket-display mx-2 h5" id="tickets_no"><b>0</b></div>
+                                <div class="ticket-count mx-2 h5">
+                                  <button class="btn btn-primary btn-md px-3 mx-2 my-2" id="increment">+</button>
+                                  <button class="btn btn-secondary btn-md px-3 mx-2 my-2 disabled" id="decrement">-</button>
+                                </div>
+                        </div>
+
+                        <div class="alert-msg d-flex justify-content-center">
+                            <div class="alert alert-danger w-75 text-center p-1 d-none" id="alert-msg">!! You Can't Buy More than 10 Tickets in a Booking !!</div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                          <button class="btn btn-md btn-success register-btn disabled" id="book-button">Book Tickets</button>
+                        </div>
+      
+                      <!-- </form> --> 
+      
+                    </div>
+
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+<script src="{{ url_for('static', filename='scripts/EventPage.js') }}"></script>
+
+{% endblock ticketBooking %}
+
+{% endblock content %}
