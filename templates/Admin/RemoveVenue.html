@@ -1,88 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venue Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  
-</head>
-<body>
-  <style>
-    
-  </style>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 shadow ">
-        <div class="navbar-brand " href="#">TicketEaze</div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active d-block d-lg-none" >
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            
-            <li class="nav-item active d-block d-lg-none" >
-                <a class="nav-link" href="#">Log Out</a>
-            </li>
-            
-            
-            
-              <li class="pt-2 nav-item d-none d-lg-block">Hello, Admin</li>
-              <li class="list-unstyled mx-3 d-lg-block  d-none">
-                <button type="button" class="btn btn-secondary">Log Out</button>
-              </li>
-          </ul>
-        </div>
-      </nav>
-      
+{% extends "./Layouts/layout.html" %}
+
+
+{% block content %}
+
+{% include "./Layouts/navBarAdmin.html" %}
+
+
+{% block RemoveVenue %} 
       <section class="bg-secondary-subtle p-5">
-        <div class="container-md py-5">
+        <div class=" container-lg py-5">
           <h4 class="text-center my-3 pb-3">List of Venues</h4>
-          <div class="row d-flex justify-content-center align-items-center">
-            <div class="w-100 col-sm-12 col-lg-9 col-xl-7">
+          <div class="d-flex justify-content-center ">
+            <div class="w-75 w-100">
               <div class="card rounded-3 shadow">
                 <div class="card-body p-4">
-      
                   
-      
+                 
+
+                  <div class="d-flex p-2">
+                    <div class="s-no col-3 px-3 font-weight-bold"><b>S.No</b></div>
+                    <div class="task text-xl col-5"><b> Venue Name </b></div>
+                    <div class="title "><b> Actions </b></div>
+                    <div class="buttons col-2 d-md-flex justify-content-md-center ">
+                    </div>
+                  </div>
+
+                  <div class="d-flex p-2">
+                    <div class="s-no col-3 px-3 col-sm-3 col-2">1. </div>
+                    <div class="task text-xl col-md-5 col-sm-5 col-5">Venue_Name 1</div>
+                    <div class="buttons ">
+                        <button class="btn px-md-2 px-sm-0 btn-danger d-md-block d-none">Remove The Venue</button>
+                        <button class="btn btn-md btn-danger d-md-none d-block">Remove</button>
+                    </div>
+                  </div>
+
+                  <div class="d-flex p-2">
+                    <div class="s-no col-3 px-3 col-sm-3 col-2">2.</div>
+                    <div class="task text-xl col-md-5 col-sm-5 col-5">Venue_Name 2</div>
+                    <div class="button-container d-flex align-content-center">
+                      <div class="buttons align-content-center">
+                        <button class="btn px-md-2 px-sm-0 btn-danger d-md-block d-none">Remove The Venue</button>
+                        <button class="btn btn-md btn-danger d-md-none d-block">Remove</button>
+                    </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex p-2">
+                    <div class="s-no col-3 px-3 col-sm-3 col-2">3.</div>
+                    <div class="task text-xl col-md-5 col-sm-5 col-5">Venue_Name 3</div>
+                    <div class="buttons ">
+                      <button class="btn px-md-2 px-sm-0 btn-danger d-md-block d-none">Remove The Venue</button>
+                      <button class="btn btn-md btn-danger d-md-none d-block">Remove</button>
+                  </div>
+                  </div>
+                  
+                  
                  
       
-                  <table class="table ">
-                    <thead>
-                      <tr>
-                        <th scope="col">S.No</th>
-                        <th scope="col">Venue Name</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Venue_Name 1</td>
-                        <td>
-                            <button type="submit" class="btn btn-danger my-auto">Delete</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Venue_Name 2</td>
-                        <td>
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Venue_Name 3</td>
-                        <td>
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-      
+                 
                 </div>
               </div>
             </div>
@@ -90,13 +65,5 @@
         </div>
       </section>
 
-
-
-
-      
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    
-</body>
-</html>
+{% endblock RemoveVenue %}
+{% endblock content  %}
