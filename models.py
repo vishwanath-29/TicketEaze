@@ -15,8 +15,7 @@ userbooking = db.Table('userbooking',
 )
  
 # Helper Table for Shows in Venue
-showinvenue = db.Table('shows',
-    db.Column('id', db.Integer,primary_key=True),
+showinvenue = db.Table('showinvenue',
     db.Column('venue_id', db.Integer, db.ForeignKey('venue.id'), primary_key=True),
     db.Column('show_id', db.Integer, db.ForeignKey('show.id'), primary_key=True)
 )
@@ -24,13 +23,19 @@ showinvenue = db.Table('shows',
 class show(db.Model):
    id = db.Column(db.Integer, primary_key = True)
    name = db.Column(db.String(100))
-   rating = db.Column(db.Integer)  
+   description = db.Column(db.String(100))
+   location = db.Column(db.String(100)) 
+   capacity = db.Column(db.Integer)  
    tags = db.Column(db.String(200))
    price = db.Column(db.Float)
+   rating = db.Column(db.Integer) 
+   showshosted = db.relationship('venue',secondary=showinvenue, backref='showshosted')
 
-   def __init__(self, name, rating, tags ,price):
+   def __init__(self, name, description,location,capacity, tags ,price):
     self.name = name
-    self.rating = rating
+    self.description = description
+    self.location=location
+    self.capacity=capacity
     self.tags = tags
     self.price = price
 
@@ -61,7 +66,7 @@ class venue(db.Model):
    capacity = db.Column(db.String(200))
    pincode = db.Column(db.String(10))
    venuetype = db.Column(db.String(10))
-   showshosted = db.relationship('show',secondary=showinvenue, backref='showshosted')
+   
 
    def __init__(self, name, city, capacity ,pincode,venuetype):
     self.name = name
