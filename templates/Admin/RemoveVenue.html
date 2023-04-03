@@ -4,8 +4,9 @@
 {% block content %}
 
 {% include "./Layouts/navBarAdmin.html" %}
-
-
+{% if message %}
+<script> alert("{{ message }}") </script>
+{% endif %}
 {% block RemoveVenue %} 
       <section class="bg-secondary-subtle p-5">
         <div class=" container-lg py-5">
@@ -24,40 +25,21 @@
                     <div class="buttons col-2 d-md-flex justify-content-md-center ">
                     </div>
                   </div>
-
+                 
+                  {% for i in venues %}
+                  <form action="/management/venue/remove" method="post">
                   <div class="d-flex p-2">
-                    <div class="s-no col-3 px-3 col-sm-3 col-2">1. </div>
-                    <div class="task text-xl col-md-5 col-sm-5 col-5">Venue_Name 1</div>
+                    <div class="s-no col-3 px-3 col-sm-3 col-2" name="venue_id">{{ i.id }}</div>
+                    <div class="task text-xl col-md-5 col-sm-5 col-5">{{ i.name }} </div>
+                    <input type="hidden" id="venue_id" name="venue_id" value="{{ i.id }}">
                     <div class="buttons ">
-                        <button class="btn px-md-2 px-sm-0 btn-danger d-md-block d-none">Remove The Venue</button>
+                        <button type="submit" class="btn px-md-2 px-sm-0 btn-danger d-md-block d-none">Remove The Venue</button>
                         <button class="btn btn-md btn-danger d-md-none d-block">Remove</button>
                     </div>
                   </div>
-
-                  <div class="d-flex p-2">
-                    <div class="s-no col-3 px-3 col-sm-3 col-2">2.</div>
-                    <div class="task text-xl col-md-5 col-sm-5 col-5">Venue_Name 2</div>
-                    <div class="button-container d-flex align-content-center">
-                      <div class="buttons align-content-center">
-                        <button class="btn px-md-2 px-sm-0 btn-danger d-md-block d-none">Remove The Venue</button>
-                        <button class="btn btn-md btn-danger d-md-none d-block">Remove</button>
-                    </div>
-                    </div>
-                  </div>
-
-                  <div class="d-flex p-2">
-                    <div class="s-no col-3 px-3 col-sm-3 col-2">3.</div>
-                    <div class="task text-xl col-md-5 col-sm-5 col-5">Venue_Name 3</div>
-                    <div class="buttons ">
-                      <button class="btn px-md-2 px-sm-0 btn-danger d-md-block d-none">Remove The Venue</button>
-                      <button class="btn btn-md btn-danger d-md-none d-block">Remove</button>
-                  </div>
-                  </div>
+                </form>
+                  {% endfor %}
                   
-                  
-                 
-      
-                 
                 </div>
               </div>
             </div>
