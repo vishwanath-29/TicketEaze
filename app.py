@@ -212,10 +212,18 @@ def editvenue():
 def removeevent():
    return render_template("Admin/RemoveEvent.html")
 
-@app.route("/management/venue/remove")
+@app.route("/management/venue/remove",methods=['GET','POST'])
 @admin_login_required
 def removevenue():
-   return render_template("Admin/RemoveVenue.html")
+   if request.method=='POST':
+      venue_id=request.form.get('venue_id')
+      venue.query.filter_by(id=venue_id).delete()
+      db.session.commit()
+      venues = db.session.query(venue).all()
+      message="Have successfully Deleted 👍!"
+      return render_template("Admin/RemoveVenue.html",venues=venues,message=message)
+   venues = db.session.query(venue).all()
+   return render_template("Admin/RemoveVenue.html",venues=venues)
 
 
 
