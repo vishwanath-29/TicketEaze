@@ -59,7 +59,7 @@ def home():
         f = request.files['venue_img']
         filename = secure_filename(f.filename)
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
-  return render_template('Home/file.html')
+  return render_template('Home/Home.html')
 
 # Register Route and Method
 @app.route("/register",methods=['GET','POST'])
@@ -154,11 +154,44 @@ def manageevent():
 def addevent():
   return render_template("Admin/AddEvent.html")
 
-@app.route("/management/venue/add")
+@app.route("/management/venue/add",methods=['GET','POST'])
 @admin_login_required
 @login_required
 def addvenue():
+  if request.method=='POST':
+     venue_name=request.form.get("venue_name")
+     venue_capacity=request.form.get("venue_capacity")
+     venue_img = request.files['venue_img']
+     filename = secure_filename(f.filename)
+     venue_type=request.form.get("venue_type")
+     venue_location=request.form.get("venue_location")
+     print(venue_name)
+     print(venue_capacity)
+     print(venue_location)
+     print(venue_type)
   return render_template("Admin/AddVenue.html")
+
+@app.route("/management/event/edit")
+@admin_login_required
+def editevent():
+  return render_template("Admin/EditEvent.html")
+
+@app.route("/management/venue/edit")
+@admin_login_required
+def editvenue():
+  return render_template("Admin/EditVenue.html")
+
+@app.route("/management/event/remove")
+@admin_login_required
+def removeevent():
+   return render_template("Admin/RemoveEvent.html")
+
+@app.route("/management/venue/remove")
+@admin_login_required
+def removevenue():
+   return render_template("Admin/RemoveVenue.html")
+
+
 
 if __name__ == "__main__":
   app.run(debug=True)
