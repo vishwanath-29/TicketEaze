@@ -129,44 +129,48 @@ def logout():
     flash('Have successfully logged out 👍!')
     return redirect('/')
 
-
+# Management Home
 @app.route("/management")
 @admin_login_required
 def management():
   return render_template("Admin/Management.html")
 
-  
+# Management of Venue Home 
 @app.route("/management/venue")
 @admin_login_required
 def managevenue():
   return render_template("Admin/ManageVenue.html")
 
-  
+# Management of Event Home
 @app.route("/management/event")
 @admin_login_required
 @login_required
 def manageevent():
   return render_template("Admin/ManageEvent.html")
 
-  
+# Addition of Event
 @app.route("/management/event/add",methods=['GET','POST'])
 @admin_login_required
 def addevent():
   if(request.method=="POST"):
+     # Getting Values from Form
      event_name=request.form.get("event_name")
      event_desc=request.form.get("event_desc")
      tags=request.form.get("event_tags")
      event_venue=request.form.get("event_venue")
      event_price=request.form.get("event_price")
-     event_location=db.session.query(venue).filter_by(id=event_venue).first().city
      event_capacity=request.form.get("event_capacity")
+     # Getting Event Location based of Venue Selected 
+     event_location=db.session.query(venue).filter_by(id=event_venue).first().city
+     # Creating DB Object
      event_details = show(name=event_name,description=event_desc,location=event_location,capacity=event_capacity,price=event_price,tags=tags)
+     # Adding value to Helper table by getting venue id and appending
      venue_details=db.session.query(venue).filter_by(id=event_venue).first()
      event_details.showshosted.append(venue_details)
      db.session.add(event_details)
      db.session.commit() 
      db.session.flush() 
-    
+     # Handling Event image
      event_img = request.files['event_img']
      extension = os.path.splitext(event_img.filename)[1]
      filename=str(event_details.id)+extension
@@ -174,28 +178,52 @@ def addevent():
   venues = db.session.query(venue).all()
   return render_template("Admin/AddEvent.html",venues=venues)
 
+# Venue Addition
 @app.route("/management/venue/add",methods=['GET','POST'])
 @admin_login_required
 def addvenue():
-
   if request.method=='POST':
+     # Getting Venue Details from Form
      venue_name=request.form.get("venue_name")
      venue_capacity=request.form.get("venue_capacity")
      venue_pincode=request.form.get("venue_pincode")
      venue_type=request.form.get("venue_type")
      venue_location=request.form.get("venue_location")
-     
-     venue_img = request.files['venue_img']
-     extension = os.path.splitext(venue_img.filename)[1]
-  
-
+     # Creating DB Object
      venue_details = venue(name=venue_name,venuetype=venue_type,city=venue_location,capacity=venue_capacity,pincode=venue_pincode)
      db.session.add(venue_details)
      db.session.commit() 
+     # Handling Image for venue
+     venue_img = request.files['venue_img']
+     extension = os.path.splitext(venue_img.filename)[1]
      venue_details = db.session.query(venue).filter_by(name=venue_name).first()
      filename=str(venue_details.id)+extension
      venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename)) 
   return render_template("Admin/AddVenue.html")
+
+@app.route("/management/event/remove")
+@admin_login_required
+def removeevent():
+   return render_template("Admin/RemoveEvent.html")
+
+# Deletion of Venue
+@app.route("/management/venue/remove",methods=['GET','POST'])
+@admin_login_required
+def removevenue():
+   if request.method=='POST':
+      # Getting Venue Id from request
+      venue_id=request.form.get('venue_id')
+      # Deleting the Venue based of ID
+      venue.query.filter_by(id=venue_id).delete()
+      db.session.commit()
+      # Getting the new Venues List
+      venues = db.session.query(venue).all()
+      message="Have successfully Deleted 👍!"
+      # Sending Message and re-rendering
+      return render_template("Admin/RemoveVenue.html",venues=venues,message=message)
+   venues = db.session.query(venue).all()
+   return render_template("Admin/RemoveVenue.html",venues=venues)
+
 
 @app.route("/management/event/edit")
 @admin_login_required
@@ -206,25 +234,6 @@ def editevent():
 @admin_login_required
 def editvenue():
   return render_template("Admin/EditVenue.html")
-
-@app.route("/management/event/remove")
-@admin_login_required
-def removeevent():
-   return render_template("Admin/RemoveEvent.html")
-
-@app.route("/management/venue/remove",methods=['GET','POST'])
-@admin_login_required
-def removevenue():
-   if request.method=='POST':
-      venue_id=request.form.get('venue_id')
-      venue.query.filter_by(id=venue_id).delete()
-      db.session.commit()
-      venues = db.session.query(venue).all()
-      message="Have successfully Deleted 👍!"
-      return render_template("Admin/RemoveVenue.html",venues=venues,message=message)
-   venues = db.session.query(venue).all()
-   return render_template("Admin/RemoveVenue.html",venues=venues)
-
 
 
 if __name__ == "__main__":
