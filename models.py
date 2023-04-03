@@ -63,11 +63,12 @@ class venue(db.Model):
    venuetype = db.Column(db.String(10))
    showshosted = db.relationship('show',secondary=showinvenue, backref='showshosted')
 
-   def __init__(self, name, city, capacity ,pincode):
+   def __init__(self, name, city, capacity ,pincode,venuetype):
     self.name = name
     self.city = city
     self.capacity = capacity
     self.pincode = pincode
+    self.venuetype = venuetype
 
 
 
