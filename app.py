@@ -3,6 +3,7 @@ from flask_login import login_user,LoginManager,current_user,logout_user,login_r
 from flask_migrate import Migrate
 from flask_session import Session
 from werkzeug.utils import secure_filename
+from sqlalchemy import delete,select
 
 from models import *
 from datetime import timedelta
@@ -201,7 +202,7 @@ def addvenue():
      venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename)) 
   return render_template("Admin/AddVenue.html")
 
-@app.route("/management/event/remove")
+@app.route("/management/event/remove",methods=['GET','POST'])
 @admin_login_required
 def removeevent():
    return render_template("Admin/RemoveEvent.html")
@@ -215,6 +216,17 @@ def removevenue():
       venue_id=request.form.get('venue_id')
       # Deleting the Venue based of ID
       venue.query.filter_by(id=venue_id).delete()
+      # Deleting Values in Helper Table and Shows in Venue
+      # Getting Show ids in that Venue
+      show_id=select(showinvenue.c.show_id).where(showinvenue.c.venue_id == venue_id)
+      show_id=db.session.execute(show_id)
+      show_id=[id for id, in show_id]
+      # Deleting Shows in that Venue
+      for i in show_id:
+         show.query.filter_by(id=i).delete()
+      # Deleting the Row of venue_id in Showinvenue
+      d = delete(showinvenue).where(showinvenue.c.venue_id == venue_id)
+      db.session.execute(d)
       db.session.commit()
       # Getting the new Venues List
       venues = db.session.query(venue).all()
