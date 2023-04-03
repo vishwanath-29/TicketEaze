@@ -8,7 +8,7 @@ from models import *
 from datetime import timedelta
 import hashlib,datetime
 import os
-
+import os.path
 
 # Intialization and Configs 
 app = Flask(__name__)
@@ -48,9 +48,10 @@ def load_user(user_id):
 # Before First Request Logging out users and 
 @app.before_first_request  
 def init():
+    db.create_all()
     session.clear()
     logout_user()
-    db.create_all()
+    
 
 # Home page and Route 
 @app.route("/",methods=['GET','POST'])
@@ -125,7 +126,7 @@ def logout():
     if session.get('was_once_logged_in'):
         del session['was_once_logged_in']
     # Flashing the message to template for alerting the success of logging out
-    flash('Have successfully logged out!')
+    flash('Have successfully logged out 👍!')
     return redirect('/')
 
 
@@ -148,27 +149,48 @@ def manageevent():
   return render_template("Admin/ManageEvent.html")
 
   
-@app.route("/management/event/add")
+@app.route("/management/event/add",methods=['GET','POST'])
 @admin_login_required
-@login_required
 def addevent():
+  if(request.method=="POST"):
+     event_name=request.form.get("event_name")
+     event_desc=request.form.get("event_desc")
+     tags=request.form.get("event_tags")
+     event_location=request.form.get("event_loc")
+     event_venue=request.form.get("event_venue")
+     event_img=request.files["event_img"]
+     filename = secure_filename(f.filename)
+     ticket_price=request.form.get("event_price")
+     event_capacity=request.form.get("event_capacity")
+
+     print(event_name)
+     print(event_desc)
+     print(event_location)
+
   return render_template("Admin/AddEvent.html")
 
 @app.route("/management/venue/add",methods=['GET','POST'])
 @admin_login_required
-@login_required
 def addvenue():
+
   if request.method=='POST':
      venue_name=request.form.get("venue_name")
      venue_capacity=request.form.get("venue_capacity")
-     venue_img = request.files['venue_img']
-     filename = secure_filename(f.filename)
+     venue_pincode=request.form.get("venue_pincode")
      venue_type=request.form.get("venue_type")
      venue_location=request.form.get("venue_location")
-     print(venue_name)
-     print(venue_capacity)
-     print(venue_location)
-     print(venue_type)
+     
+     venue_img = request.files['venue_img']
+    
+     extension = os.path.splitext(venue_img.filename)[1]
+  
+
+     venue_details = venue(name=venue_name,venuetype=venue_type,city=venue_location,capacity=venue_capacity,pincode=venue_pincode)
+     db.session.add(venue_details)
+     db.session.commit() 
+     venue_details = db.session.query(venue).filter_by(name=venue_name).first()
+     filename=str(venue_details.id)+extension
+     venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename)) 
   return render_template("Admin/AddVenue.html")
 
 @app.route("/management/event/edit")
