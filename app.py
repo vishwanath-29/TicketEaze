@@ -166,7 +166,11 @@ def addevent():
      db.session.add(event_details)
      db.session.commit() 
      db.session.flush() 
-     print(event_details.id)
+    
+     event_img = request.files['event_img']
+     extension = os.path.splitext(event_img.filename)[1]
+     filename=str(event_details.id)+extension
+     event_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"event", filename)) 
   venues = db.session.query(venue).all()
   return render_template("Admin/AddEvent.html",venues=venues)
 
@@ -182,7 +186,6 @@ def addvenue():
      venue_location=request.form.get("venue_location")
      
      venue_img = request.files['venue_img']
-    
      extension = os.path.splitext(venue_img.filename)[1]
   
 
