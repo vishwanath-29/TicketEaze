@@ -54,6 +54,7 @@
 <section class="w-100  bg-white p-5">
   <div class="container">
     <div class="row py-3">
+      <!-- <form action="/event/booktickets" method="post"> -->
       {% for i in events %}
       <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
         <div class="card">
@@ -61,7 +62,7 @@
           <div class="card-body">
             <h4 class="card-title">{{i.name}}</h4>
             <p class="card-text">{{i.description}}</p>
-            <a href="/event/booktickets" class="btn btn-primary">Book Tickets</a>
+            <a href="/event/booktickets/{{i.id}}" class="btn btn-primary">Book Tickets</a>
           </div>
         </div>
       </div>
