@@ -4,5 +4,5 @@ Add a page to remove venue and event
 Hover effects to Cards to all the pages
 
 UI:
-    Price display  
-    Number of tickets display
+    Price display   //DONE
+    Number of tickets display  //DONE
