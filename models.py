@@ -11,7 +11,8 @@ db = SQLAlchemy()
 userbooking = db.Table('userbooking',
     db.Column('booking_id', db.Integer, primary_key=True),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('show_id', db.Integer, db.ForeignKey('show.id'))
+    db.Column('show_id', db.Integer, db.ForeignKey('show.id')),
+    db.Column('ticket_count', db.Integer)
 )
  
 # Helper Table for Shows in Venue
