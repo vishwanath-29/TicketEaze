@@ -57,11 +57,8 @@ def init():
 # Home page and Route 
 @app.route("/",methods=['GET','POST'])
 def home():
-  if request.method == 'POST':
-        f = request.files['venue_img']
-        filename = secure_filename(f.filename)
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
-  return render_template('Home/Home.html')
+  events = db.session.query(show).all() 
+  return render_template('Home/Home.html',events=events)
 
 # Register Route and Method
 @app.route("/register",methods=['GET','POST'])
