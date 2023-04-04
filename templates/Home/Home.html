@@ -54,90 +54,18 @@
 <section class="w-100  bg-white p-5">
   <div class="container">
     <div class="row py-3">
+      {% for i in events %}
       <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
         <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
+          <img src="/static/file_uploads/event/{{i.id}}.jpeg" alt="Image 1" class="card-img-top">
           <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
+            <h4 class="card-title">{{i.name}}</h4>
+            <p class="card-text">{{i.description}}</p>
             <a href="/event/booktickets" class="btn btn-primary">Book Tickets</a>
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-        <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
-            <a href="#" class="btn btn-primary">Book Tickets</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-        <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
-            <a href="#" class="btn btn-primary">Book Tickets</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-        <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
-            <a href="/event/booktickets" class="btn btn-primary">Book Tickets</a>
-          </div>
-        </div>
-      </div>  
-    
-      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-        <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
-            <a href="#" class="btn btn-primary">Book Tickets</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-        <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
-            <a href="#" class="btn btn-primary">Book Tickets</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-        <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
-            <a href="#" class="btn btn-primary">Book Tickets</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-        <div class="card">
-          <img src="/static/Images/car-pic.jpg" alt="Image 1" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Event Name</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed mi at lacus tincidunt accumsan eget ac nibh. Fusce eget purus vel sem pulvinar auctor non et orci.</p>
-            <a href="#" class="btn btn-primary">Book Tickets</a>
-          </div>
-        </div>
-      </div>
-      
-   
-    
+      {% endfor %}
   </div>
   
 
