@@ -3,7 +3,7 @@ var ticketDecrease = document.querySelector("#decrement")
 var bookButton = document.querySelector("#book-button")
 var alertMessage=document.querySelector("#alert-msg")
 var numberOfTickets = document.querySelector("#tickets_no")
-console.log("hello");
+
 
 
 var count=0;
@@ -36,7 +36,10 @@ ticketDecrease.addEventListener("click",()=>{
         alertMessage.classList.add("d-none")
     }
 })
-
+function getnooftickets(){
+    document.getElementById("ticketcount").value=document.getElementById("tickets_no").innerHTML
+    return true
+}
 // ticketIncrease.onclick = function(){
 //     count++;
 //     numberOfTickets.innerHTML="hell";
