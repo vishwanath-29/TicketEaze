@@ -3,7 +3,7 @@ from flask_login import login_user,LoginManager,current_user,logout_user,login_r
 from flask_migrate import Migrate
 from flask_session import Session
 from werkzeug.utils import secure_filename
-from sqlalchemy import delete,select
+from sqlalchemy import delete,select,insert
 
 from models import *
 from datetime import timedelta
@@ -261,14 +261,21 @@ def editvenue():
 
 
 
-@app.route("/event/booktickets/<int:event_id>")
+@app.route("/event/booktickets/<int:event_id>",methods=['GET','POST'])
 def ticket_booking(event_id):
    if not current_user.is_authenticated:
       return redirect("/login/user")
    if request.method=='POST':
-      pass
+      numberoftickets=request.form.get('ticketcount')
+      user_details=current_user
+      event_details = db.session.query(show).filter_by(id=event_id).first()
+      event_details.currentcapacity-=int(numberoftickets)
+      booking_query = insert(userbooking).values(user_id=user_details.id,show_id=event_id,ticket_count=numberoftickets)
+      db.session.execute(booking_query)
+      db.session.commit()
    event_details = db.session.query(show).filter_by(id=event_id).first()
    return render_template("Events/EventPage.html",event_details=event_details)
+
 
 if __name__ == "__main__":
   app.run(debug=True)
