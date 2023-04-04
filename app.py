@@ -260,16 +260,22 @@ def editvenue():
   return render_template("Admin/EditVenue.html")
 
 
-
+# Ticket Booking Functionality 
 @app.route("/event/booktickets/<int:event_id>",methods=['GET','POST'])
 def ticket_booking(event_id):
+   # User not authenticated redirect to login
    if not current_user.is_authenticated:
       return redirect("/login/user")
    if request.method=='POST':
+      # Get the number of tickets from webpage
       numberoftickets=request.form.get('ticketcount')
+      # Get Current user details
       user_details=current_user
+      # Get Event Details based of ID
       event_details = db.session.query(show).filter_by(id=event_id).first()
+      # Update the current capacity with number of tickets sold
       event_details.currentcapacity-=int(numberoftickets)
+      # Insert the booking into booking helper table 
       booking_query = insert(userbooking).values(user_id=user_details.id,show_id=event_id,ticket_count=numberoftickets)
       db.session.execute(booking_query)
       db.session.commit()
