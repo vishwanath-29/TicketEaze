@@ -261,11 +261,12 @@ def editvenue():
 
 
 
-@app.route("/event/booktickets")
-@login_required
-def ticket_booking():
-   return render_template("Events/EventPage.html")
-
+@app.route("/event/booktickets/<int:event_id>")
+def ticket_booking(event_id):
+   if not current_user.is_authenticated:
+      return redirect("/login/user")
+   event_details = db.session.query(show).filter_by(id=event_id).first()
+   return render_template("Events/EventPage.html",event_details=event_details)
 
 if __name__ == "__main__":
   app.run(debug=True)
