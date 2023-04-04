@@ -265,6 +265,8 @@ def editvenue():
 def ticket_booking(event_id):
    if not current_user.is_authenticated:
       return redirect("/login/user")
+   if request.method=='POST':
+      pass
    event_details = db.session.query(show).filter_by(id=event_id).first()
    return render_template("Events/EventPage.html",event_details=event_details)
 
