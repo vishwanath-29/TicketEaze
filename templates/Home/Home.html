@@ -61,8 +61,8 @@
           <img src="/static/file_uploads/event/{{i.id}}.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
           <div class="card-body">
             <h4 class="card-title">{{i.name}}</h4>
-            <p class="card-text">{{i.description}}</p>
-            <p class="card-text">Ticket Price</p>
+            <p class="card-text">{{i.shortdescription}}</p>
+            <p class="card-text">₹{{i.price}}</p>
             <a href="/event/booktickets/{{i.id}}" class="btn btn-primary">Book Tickets</a>
           </div>
         </div>
