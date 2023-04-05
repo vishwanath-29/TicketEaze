@@ -283,7 +283,25 @@ def ticket_booking(event_id):
    event_details = db.session.query(show).filter_by(id=event_id).first()
    return render_template("Events/EventPage.html",event_details=event_details)
 
+@app.route("/orders",methods=['GET','POST'])
+@login_required
+def myorders():
+   userid=current_user.id
+   show_id=select(userbooking.c.show_id).where(userbooking.c.user_id == userid)
+   ticket_count=select(userbooking.c.ticket_count).where(userbooking.c.user_id == userid)
+   show_id=db.session.execute(show_id)
+   ticket_count=db.session.execute(ticket_count)
+   show_id=[id for id, in show_id]
+   ticket_count=[id for id, in ticket_count]
+   print(ticket_count)
+   show_id=set(show_id)
+   show_id=list(show_id)
+   show_details=db.session.query(show).filter(show.id.in_(show_id))
+   for i in show_details:
+    print(i.name)
 
+   return redirect("/")
+   
 if __name__ == "__main__":
   app.run(debug=True)
 
