@@ -25,6 +25,7 @@ class show(db.Model):
    id = db.Column(db.Integer, primary_key = True)
    name = db.Column(db.String(100))
    description = db.Column(db.String(100))
+   shortdescription = db.Column(db.String(20))
    location = db.Column(db.String(100)) 
    capacity = db.Column(db.Integer)  
    tags = db.Column(db.String(200))
@@ -33,7 +34,7 @@ class show(db.Model):
    currentcapacity = db.Column(db.Integer) 
    showshosted = db.relationship('venue',secondary=showinvenue, backref='showshosted')
 
-   def __init__(self, name, description,location,capacity, tags ,price):
+   def __init__(self, name, description,location,capacity, tags ,price,shortdescription):
     self.name = name
     self.description = description
     self.location=location
@@ -41,6 +42,7 @@ class show(db.Model):
     self.tags = tags
     self.price = price
     self.currentcapacity=capacity
+    self.shortdescription=shortdescription
 
 
 # User Model

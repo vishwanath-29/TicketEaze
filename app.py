@@ -158,10 +158,11 @@ def addevent():
      event_venue=request.form.get("event_venue")
      event_price=request.form.get("event_price")
      event_capacity=request.form.get("event_capacity")
+     event_short_desc=request.form.get("event_short_desc")
      # Getting Event Location based of Venue Selected 
      event_location=db.session.query(venue).filter_by(id=event_venue).first().city
      # Creating DB Object
-     event_details = show(name=event_name,description=event_desc,location=event_location,capacity=event_capacity,price=event_price,tags=tags)
+     event_details = show(name=event_name,description=event_desc,location=event_location,capacity=event_capacity,price=event_price,tags=tags,shortdescription=event_short_desc)
      # Adding value to Helper table by getting venue id and appending
      venue_details=db.session.query(venue).filter_by(id=event_venue).first()
      event_details.showshosted.append(venue_details)
