@@ -285,6 +285,20 @@ def ticket_booking(event_id):
    event_details = db.session.query(show).filter_by(id=event_id).first()
    return render_template("Events/EventPage.html",event_details=event_details)
 
+
+@app.route("/management/event/list")
+@admin_login_required
+def eventlist():
+   return render_template("Admin/EventList.html")
+
+@app.route('/management/venue/list')
+@admin_login_required
+def venuelist():
+   return render_template("Admin/VenueList.html")
+
+
+
+
 @app.route("/orders",methods=['GET','POST'])
 @login_required
 def myorders():
