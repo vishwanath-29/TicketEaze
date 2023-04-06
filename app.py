@@ -58,7 +58,7 @@ def init():
 @app.route("/",methods=['GET','POST'])
 def home():
   events = db.session.query(show).all() 
-  return render_template('Home/Home.html',events=events)
+  return render_template('Home/Home.html',events=events,title="Home")
 
 # Register Route and Method
 @app.route("/register",methods=['GET','POST'])
@@ -74,14 +74,14 @@ def register():
     password=hashlib.sha256(password.encode()).hexdigest()
     # Check if email already exist
     if user.query.filter_by(email=email).first():
-      return render_template("Register/Register.html",status=1)  
+      return render_template("Register/Register.html",status=1,title="Register")  
     else:
       user_details = user(name=name, email=email,dateofbirth=dateofbirth,phonenumber=phonenumber,password=password)
       db.session.add(user_details)
       db.session.commit()  
       return redirect("/")
   else:
-    return render_template("Register/Register.html")
+    return render_template("Register/Register.html",title="Register")
 
 # User logging
 @app.route("/login/user",methods=['GET','POST'])
@@ -127,6 +127,7 @@ def admin_login():
        flash('Account Does not Exist')
        return redirect("/login/admin")
   return render_template("Register/AdminLogin.html")
+  return render_template("Register/AdminLogin.html",title="Admin Login")
 
 # Logout user
 @app.route('/logout')
@@ -142,20 +143,20 @@ def logout():
 @app.route("/management")
 @admin_login_required
 def management():
-  return render_template("Admin/Management.html")
+  return render_template("Admin/Management.html",title="Management")
 
 # Management of Venue Home 
 @app.route("/management/venue")
 @admin_login_required
 def managevenue():
-  return render_template("Admin/ManageVenue.html")
+  return render_template("Admin/ManageVenue.html",title="Venue Management")
 
 # Management of Event Home
 @app.route("/management/event")
 @admin_login_required
 @login_required
 def manageevent():
-  return render_template("Admin/ManageEvent.html")
+  return render_template("Admin/ManageEvent.html",title="Manage Event")
 
 # Addition of Event
 @app.route("/management/event/add",methods=['GET','POST'])
@@ -186,7 +187,7 @@ def addevent():
      filename=str(event_details.id)+extension
      event_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"event", filename)) 
   venues = db.session.query(venue).all()
-  return render_template("Admin/AddEvent.html",venues=venues)
+  return render_template("Admin/AddEvent.html",venues=venues,title="Event Management")
 
 # Venue Addition
 @app.route("/management/venue/add",methods=['GET','POST'])
@@ -209,7 +210,7 @@ def addvenue():
      venue_details = db.session.query(venue).filter_by(name=venue_name).first()
      filename=str(venue_details.id)+extension
      venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename)) 
-  return render_template("Admin/AddVenue.html")
+  return render_template("Admin/AddVenue.html",title="Venue Management")
 
 @app.route("/management/event/remove",methods=['GET','POST'])
 @admin_login_required
@@ -227,9 +228,9 @@ def removeevent():
       events = db.session.query(show).all()
       message="Have successfully Deleted 👍!"
       # Sending Message and re-rendering
-      return render_template("Admin/RemoveEvent.html",events=events,message=message)
+      return render_template("Admin/RemoveEvent.html",events=events,message=message,title="Event Management")
    events = db.session.query(show).all()
-   return render_template("Admin/RemoveEvent.html",events=events)
+   return render_template("Admin/RemoveEvent.html",events=events,title="Event Management")
 
 # Deletion of Venue
 @app.route("/management/venue/remove",methods=['GET','POST'])
@@ -256,20 +257,20 @@ def removevenue():
       venues = db.session.query(venue).all()
       message="Have successfully Deleted 👍!"
       # Sending Message and re-rendering
-      return render_template("Admin/RemoveVenue.html",venues=venues,message=message)
+      return render_template("Admin/RemoveVenue.html",venues=venues,message=message,title="Venue Management")
    venues = db.session.query(venue).all()
-   return render_template("Admin/RemoveVenue.html",venues=venues)
+   return render_template("Admin/RemoveVenue.html",venues=venues,title="Venue Management")
 
 
 @app.route("/management/event/edit")
 @admin_login_required
 def editevent():
-  return render_template("Admin/EditEvent.html")
+  return render_template("Admin/EditEvent.html",title="Event Management")
 
 @app.route("/management/venue/edit")
 @admin_login_required
 def editvenue():
-  return render_template("Admin/EditVenue.html")
+  return render_template("Admin/EditVenue.html",title="Event Management")
 
 
 # Ticket Booking Functionality 
@@ -294,18 +295,18 @@ def ticket_booking(event_id):
       db.session.execute(booking_query)
       db.session.commit()
    event_details = db.session.query(show).filter_by(id=event_id).first()
-   return render_template("Events/EventPage.html",event_details=event_details)
+   return render_template("Events/EventPage.html",event_details=event_details,title="Ticket Booking")
 
 
 @app.route("/management/event/list")
 @admin_login_required
 def eventlist():
-   return render_template("Admin/EventList.html")
+   return render_template("Admin/EventList.html",title="Event List")
 
 @app.route('/management/venue/list')
 @admin_login_required
 def venuelist():
-   return render_template("Admin/VenueList.html")
+   return render_template("Admin/VenueList.html",title="Venue List")
 
 
 
@@ -332,12 +333,12 @@ def venuelist():
 @app.route("/myorders")
 @login_required
 def myorders():
-   return render_template("Orders/OrdersPage.html")
+   return render_template("Orders/OrdersPage.html",title="My Orders")
 
 @app.route("/myorders/tickets")
 @login_required
 def ticket_view():
-   return render_template("Orders/Ticket.html")
+   return render_template("Orders/Ticket.html",title="Ticket")
    
 if __name__ == "__main__":
   app.run(debug=True)
