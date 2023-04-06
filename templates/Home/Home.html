@@ -3,11 +3,53 @@
 {% block content %}
 {% include "./Layouts/navBarWithoutLogin.html" %}
 {% block carousel %}
-{% with messages = get_flashed_messages() %}
-    {% for message in messages %}
-      <script> alert("{{ message }}") </script>
-    {% endfor %}
-{% endwith %}  
+
+  
+{% with success = get_flashed_messages(category_filter=["logout"]) %}
+{% if success %}
+{% for message in success %}
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+  <div id="logout-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+<script>
+  // Show alert message on page load
+  $(document).ready(function() {
+    $("#success-alert").show();
+    // Hide alert message after 3 seconds
+    setTimeout(function() {
+      $("#success-alert").alert("close");
+    }, 3000);
+  });
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %}
+  
+{% with success = get_flashed_messages(category_filter=["success"]) %}
+{% if success %}
+{% for message in success %}
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+  <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+<script>
+  // Show alert message on page load
+  $(document).ready(function() {
+    $("#success-alert").show();
+    // Hide alert message after 3 seconds
+    setTimeout(function() {
+      $("#success-alert").alert("close");
+    }, 3000);
+  });
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %}
 <section class="w-100  bg-white p-5">
   <div id="carouselExampleCaptions" class="carousel slide w-75 m-auto">
       <div class="carousel-indicators">
