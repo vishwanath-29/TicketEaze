@@ -97,7 +97,10 @@ def user_login():
                 # Setting the current session user type as user for logging in 
                 session['user_type'] = 'user'
                 login_user(user_login) 
-                return redirect("/")        
+                return redirect("/")  
+            else:
+               flash('Invalid Credentials!')
+               return redirect("/login/user")      
   else:
      return render_template("Register/UserLogin.html")
 
@@ -115,6 +118,9 @@ def admin_login():
                 session['user_type'] = 'admin'
                 login_user(admin_login) 
                 return redirect("/management")
+            else:
+               flash('Invalid Credentials!')
+               return redirect("/login/admin")
   return render_template("Register/AdminLogin.html")
 
 # Logout user
