@@ -6,6 +6,23 @@
 
 {% block ticketBooking %}
 
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+  <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+    Success! Your action was completed.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+
+<script>
+  // Show alert message on page load
+  $(document).ready(function() {
+    $("#success-alert").show();
+    // Hide alert message after 3 seconds
+    setTimeout(function() {
+      $("#success-alert").alert("close");
+    }, 3000);
+  });
+</script>
   
       <section class="p-5 bg-white mt-5 " >
         <div class="container h-100">
