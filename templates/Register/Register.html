@@ -2,6 +2,12 @@
 {% block content %}
 {% include "./Layouts/navBarWithoutLogin.html" %}
 {% block registerForm %}
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+  <script> alert("{{ message }}") </script>
+{% endfor %}
+{% endwith %}  
+
 {% if status==1 %}
 <div> {{ status }} </div>
 <script>
