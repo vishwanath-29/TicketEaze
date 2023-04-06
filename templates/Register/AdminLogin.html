@@ -4,11 +4,29 @@
 {% include "./Layouts/navBarWithoutLogin.html" %}
 {% block adminLoginForm %}
 
-{% with messages = get_flashed_messages() %}
-{% for message in messages %}
-  <script> alert("{{ message }}") </script>
+
+{% with success = get_flashed_messages(category_filter=["credentials","email"]) %}
+{% if success %}
+{% for message in success %}
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+  <div id="password-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+<script>
+  // Show alert message on page load
+  $(document).ready(function() {
+    $("#success-alert").show();
+    // Hide alert message after 3 seconds
+    setTimeout(function() {
+      $("#success-alert").alert("close");
+    }, 3000);
+  });
+</script>
 {% endfor %}
-{% endwith %}  
+{% endif %}
+{% endwith %} 
 
 <section>
 

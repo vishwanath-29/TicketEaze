@@ -123,8 +123,11 @@ def admin_login():
                 login_user(admin_login) 
                 return redirect("/management")
             else:
-               flash('Invalid Credentials!')
+               flash('Invalid Credentials!😐 ','credentials')
                return redirect("/login/admin")
+    else:
+      flash('Email Wrong !😐 ','email')
+      return redirect("/login/admin")
   return render_template("Register/AdminLogin.html",title="Admin Login")
 
 # Logout user
