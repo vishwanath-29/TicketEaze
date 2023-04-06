@@ -130,7 +130,7 @@ def logout():
     if session.get('was_once_logged_in'):
         del session['was_once_logged_in']
     # Flashing the message to template for alerting the success of logging out
-    flash('Have successfully logged out 👍!')
+    flash('Have successfully logged out 👍!','logout')
     return redirect('/')
 
 # Management Home
@@ -286,8 +286,11 @@ def ticket_booking(event_id):
       total_cost=event_details.price*int(numberoftickets)
       # Insert the booking into booking helper table
       booking_query = insert(userbooking).values(user_id=user_details.id,show_id=event_id,ticket_count=numberoftickets,total_price=total_cost)
-      db.session.execute(booking_query)
+      booking_id=db.session.execute(booking_query)
       db.session.commit()
+      booking_id = booking_id.lastrowid
+      flash('Success your booking is confirmed with booking id:'+str(booking_id),'success')
+      return redirect("/")
    event_details = db.session.query(show).filter_by(id=event_id).first()
    return render_template("Events/EventPage.html",event_details=event_details,title="Ticket Booking")
 
