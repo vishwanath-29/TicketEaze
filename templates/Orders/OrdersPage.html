@@ -10,52 +10,21 @@
     <div class="container">
       <div class="row py-3">
         
-
+        {% for i in range(numberofbookings) %}
         <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
             <div class="card">
-              <img src="/static/file_uploads/event/5.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
+              <img src="/static/file_uploads/event/{{events[bookings[i][1]].id}}.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
               <div class="card-body">
-                <h4 class="card-title">Event_Name</h4>
-                <a href="/myorders/tickets" class="btn btn-primary">View Ticket</a>
+                <form action="/myorders" method="POST">
+                <h4 class="card-title">{{events[bookings[i][1]].name}}</h4>
+                <input type="hidden" name="booking_id" value="{{bookings[i][0]}}">
+                <button class="btn btn-primary">View Ticket</a>
+                </form>
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-            <div class="card">
-              <img src="/static/file_uploads/event/5.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
-              <div class="card-body">
-                <h4 class="card-title">Event_Name</h4>
-                <a href="" class="btn btn-primary">View Ticket</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-            <div class="card">
-              <img src="/static/file_uploads/event/5.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
-              <div class="card-body">
-                <h4 class="card-title">Event_Name</h4>
-                <a href="" class="btn btn-primary">View Ticket</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-            <div class="card">
-              <img src="/static/file_uploads/event/5.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
-              <div class="card-body">
-                <h4 class="card-title">Event_Name</h4>
-                <a href="" class="btn btn-primary">View Ticket</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
-            <div class="card">
-              <img src="/static/file_uploads/event/5.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
-              <div class="card-body">
-                <h4 class="card-title">Event_Name</h4>
-                <a href="" class="btn btn-primary">View Ticket</a>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
+
     </div>
     
   
