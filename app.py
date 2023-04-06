@@ -91,7 +91,6 @@ def user_login():
     password=request.form.get("password")
     password=hashlib.sha256(password.encode()).hexdigest()
     user_login = user.query.filter_by(email=email).first()
-    
     if user_login:
             if(user_login.password==password):
                 # Setting the current session user type as user for logging in 
@@ -101,6 +100,9 @@ def user_login():
             else:
                flash('Invalid Credentials!')
                return redirect("/login/user")      
+    else:
+      flash('Account Does not Exist')
+      return redirect("/register")
   else:
      return render_template("Register/UserLogin.html")
 
@@ -121,6 +123,9 @@ def admin_login():
             else:
                flash('Invalid Credentials!')
                return redirect("/login/admin")
+    else:
+       flash('Account Does not Exist')
+       return redirect("/login/admin")
   return render_template("Register/AdminLogin.html")
 
 # Logout user
