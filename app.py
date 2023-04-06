@@ -91,6 +91,7 @@ def user_login():
     password=request.form.get("password")
     password=hashlib.sha256(password.encode()).hexdigest()
     user_login = user.query.filter_by(email=email).first()
+    
     if user_login:
             if(user_login.password==password):
                 # Setting the current session user type as user for logging in 
@@ -100,11 +101,8 @@ def user_login():
             else:
                flash('Invalid Credentials!')
                return redirect("/login/user")      
-    else:
-      flash('Account Does not Exist')
-      return redirect("/register")
   else:
-     return render_template("Register/UserLogin.html")
+     return render_template("Register/UserLogin.html",title="User Login")
 
 # Admin Login
 @app.route("/login/admin",methods=['GET','POST'])
@@ -123,10 +121,6 @@ def admin_login():
             else:
                flash('Invalid Credentials!')
                return redirect("/login/admin")
-    else:
-       flash('Account Does not Exist')
-       return redirect("/login/admin")
-  return render_template("Register/AdminLogin.html")
   return render_template("Register/AdminLogin.html",title="Admin Login")
 
 # Logout user
@@ -270,7 +264,7 @@ def editevent():
 @app.route("/management/venue/edit")
 @admin_login_required
 def editvenue():
-  return render_template("Admin/EditVenue.html",title="Event Management")
+  return render_template("Admin/EditVenue.html",title="Venue Management")
 
 
 # Ticket Booking Functionality 
