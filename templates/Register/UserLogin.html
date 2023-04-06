@@ -5,6 +5,11 @@
 {% block userLoginForm %}
     
 
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+  <script> alert("{{ message }}") </script>
+{% endfor %}
+{% endwith %}  
 <section>
 
     <div class="container p-2">

@@ -4,7 +4,11 @@
 {% include "./Layouts/navBarWithoutLogin.html" %}
 {% block adminLoginForm %}
 
-    
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+  <script> alert("{{ message }}") </script>
+{% endfor %}
+{% endwith %}  
 
 <section>
 
