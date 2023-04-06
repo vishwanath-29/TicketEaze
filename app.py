@@ -299,24 +299,34 @@ def venuelist():
 
 
 
-@app.route("/orders",methods=['GET','POST'])
+# @app.route("/orders",methods=['GET','POST'])
+# @login_required
+# def myorders():
+#    userid=current_user.id
+#    bookings=select(userbooking.c.booking_id,userbooking.c.show_id,userbooking.c.ticket_count,userbooking.c.total_price).where(userbooking.c.user_id == userid)
+   
+#    bookings=db.session.execute(bookings)
+#    show_id=[]
+#    bookings=list(bookings)
+   
+#    for i in range (len(bookings)):
+#       show_id.append(bookings[i][1]) 
+#    show_details=db.session.query(show).filter(show.id.in_(show_id))
+#    show_details_dict={}
+#    for i in show_details:
+#       show_details_dict[i.id]=i
+#    print(bookings)
+#    return render_template("Orders/Orders.html",events=show_details_dict,bookings=bookings,numberofbookings=len(bookings))
+
+@app.route("/myorders")
 @login_required
 def myorders():
-   userid=current_user.id
-   bookings=select(userbooking.c.booking_id,userbooking.c.show_id,userbooking.c.ticket_count,userbooking.c.total_price).where(userbooking.c.user_id == userid)
-   
-   bookings=db.session.execute(bookings)
-   show_id=[]
-   bookings=list(bookings)
-   
-   for i in range (len(bookings)):
-      show_id.append(bookings[i][1]) 
-   show_details=db.session.query(show).filter(show.id.in_(show_id))
-   show_details_dict={}
-   for i in show_details:
-      show_details_dict[i.id]=i
-   print(bookings)
-   return render_template("Orders/Orders.html",events=show_details_dict,bookings=bookings,numberofbookings=len(bookings))
+   return render_template("Orders/OrdersPage.html")
+
+@app.route("/myorders/tickets")
+@login_required
+def ticket_view():
+   return render_template("Orders/Ticket.html")
    
 if __name__ == "__main__":
   app.run(debug=True)
