@@ -78,8 +78,9 @@ def register():
     else:
       user_details = user(name=name, email=email,dateofbirth=dateofbirth,phonenumber=phonenumber,password=password)
       db.session.add(user_details)
-      db.session.commit()  
-      return redirect("/")
+      db.session.commit()
+      flash('Successfully Registered 😎!','register')
+      return redirect("/login/user")
   else:
     return render_template("Register/Register.html",title="Register")
 
@@ -99,8 +100,11 @@ def user_login():
                 login_user(user_login) 
                 return redirect("/")  
             else:
-               flash('Invalid Credentials!')
-               return redirect("/login/user")      
+               flash('Invalid Credentials! 😞','credentials')
+               return redirect("/login/user")     
+    else:
+               flash('Email is not Registered! 😬','email')
+               return redirect("/login/user")  
   else:
      return render_template("Register/UserLogin.html",title="User Login")
 
