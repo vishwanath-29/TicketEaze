@@ -19,7 +19,7 @@
       
                       <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Edit Your Event Details</p>
       
-                      <form class="mx-1 mx-md-4" action="/management/event/add" method="post"  enctype="multipart/form-data">
+                      <form class="mx-1 mx-md-4" action="/management/event/edit" method="post"  enctype="multipart/form-data">
       
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -27,6 +27,7 @@
                             <div class="form-label" for="form3Example1c">Event Type</div>
                             <select class="dropdown rounded-3 p-1" name="Event Type" id="event_type">
                               <option value="--select--"> --Select--</option>
+                              
                               <option value="Movie">Movie</option>
                               <option value="Comedy Shows">Comedy Shows</option>
                               <option value="Music Concerts">Music Concerts</option>
@@ -38,15 +39,23 @@
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example1c">Event Name</label>
-                            <input type="text" name="event_name" class="form-control" placeholder="Event Name" required/>
+                            <input type="text" name="event_name" class="form-control" placeholder="Event Name" value="{{event.name}}" required/>
                           </div>
                         </div>
-      
+
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <label class="form-label" for="form3Example3c">Event Description</label>
-                            <textarea type="textarea" name="event_desc" class="form-control" placeholder="Event Description" required></textarea>
+                            <label class="form-label" for="form3Example3c">Event Short Description</label>
+                            <textarea type="textarea" name="event_short_desc" class="form-control" placeholder="Event Short Description"  required>{{event.shortdescription}}</textarea>
+                          </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <label class="form-label" for="form3Example3c">Event Full Description</label>
+                            <textarea type="textarea" name="event_desc" class="form-control" placeholder="Event Description"  required>{{event.description}}</textarea>
                           </div>
                         </div>
 
@@ -54,7 +63,7 @@
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example3c">Tags</label>
-                            <textarea type="textarea" name="event_tags" class="form-control" placeholder="Tags" required></textarea>
+                            <textarea type="textarea" name="event_tags" class="form-control" placeholder="Tags" required>{{event.tags}}</textarea>
                           </div>
                         </div>
 
@@ -67,18 +76,20 @@
                             <select class="dropdown rounded-3 px-3 py-1" name="event_venue" id="event_venue">
                               <option value="--select--"> --Select--</option>
                               {% for i in venues %}
+                              {% if i.id == venue_id %}
+                              <option value="{{ i.id }} " selected> {{i.name}}</option>
+                              {% else %}
                               <option value="{{ i.id }} "> {{i.name}}</option>
+                              {% endif %}
                               {% endfor %}
                             </select>
                           </div>
                         </div>
-
-
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example3c">Event Photo</label>
-                            <input type="file" name="event_img" class="form-control"  required />
+                            <input type="file" name="event_img" class="form-control"/>
                           </div>
                         </div>
 
@@ -86,7 +97,7 @@
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example3c">Ticket Price(In Rs.)</label>
-                            <input type="number" name="event_price" class="form-control" placeholder="Ticket Price(In Rs.)"/>
+                            <input type="number" name="event_price" class="form-control" placeholder="Ticket Price(In Rs.)" value="{{event.price}}"/>
                           </div>
                         </div>
 
@@ -94,16 +105,12 @@
                           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="form3Example3c">Capacity</label>
-                            <input type="number" name="event_capacity" class="form-control" placeholder="Event Capacity"/>
+                            <input type="number" name="event_capacity" class="form-control" placeholder="Event Capacity" value="{{event.capacity}}"/>
                           </div>
                         </div>
       
-                        
-      
-                        
-      
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button type="submit" class="btn btn-success btn-md register-btn">Add Event</button>
+                          <button type="submit" class="btn btn-success btn-md register-btn">Edit Event</button>
                         </div>
       
                       </form>
