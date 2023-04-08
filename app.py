@@ -284,13 +284,17 @@ def editvenue():
      venue_type=request.form.get("venue_type")
      venue_location=request.form.get("venue_location")
      venue_img = request.files['venue_img']
+     venue_details=db.session.query(venue).filter_by(id=venue_id).first()
+     venue_details.name=venue_name
+     venue_details.capacity=venue_capacity
+     venue_details.pincode=venue_pincode
+     venue_details.city=venue_location
+     venue_details.venuetype=venue_type
+     db.session.commit()
      if venue_img.filename!='':
-        print(venue_id)
         extension = os.path.splitext(venue_img.filename)[1]
         filename=str(venue_id)+extension
         venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename))
-     else:
-        print("no image")
      return redirect("/management/venue/edit")
   else:
     if not venue_id:
@@ -327,17 +331,6 @@ def ticket_booking(event_id):
       return redirect("/")
    event_details = db.session.query(show).filter_by(id=event_id).first()
    return render_template("Events/EventPage.html",event_details=event_details,title="Ticket Booking")
-
-
-@app.route("/management/event/list")
-@admin_login_required
-def eventlist():
-   return render_template("Admin/EventList.html",title="Event List")
-
-@app.route('/management/venue/list')
-@admin_login_required
-def venuelist():
-   return render_template("Admin/VenueList.html",title="Venue List")
 
 @app.route("/myorders",methods=['GET','POST'])
 @login_required
