@@ -217,6 +217,7 @@ def addvenue():
      venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename)) 
   return render_template("Admin/AddVenue.html",title="Venue Management")
 
+# Deletion of Event
 @app.route("/management/event/remove",methods=['GET','POST'])
 @admin_login_required
 def removeevent():
@@ -266,17 +267,20 @@ def removevenue():
    venues = db.session.query(venue).all()
    return render_template("Admin/RemoveVenue.html",venues=venues,title="Venue Management")
 
-
+# Editing of Event
 @app.route("/management/event/edit")
 @admin_login_required
 def editevent():
   return render_template("Admin/EditEvent.html",title="Event Management")
 
+# Editing of Venues
 @app.route("/management/venue/edit",methods=['GET','POST'])
 @admin_login_required
 def editvenue():
+  # Getting Venue id from URL 
   venue_id=request.args.get('venue_id')
   if request.method=='POST':
+     # Getting all the information from the form
      venue_id=request.form.get('venue_id')
      venue_name=request.form.get("venue_name")
      venue_capacity=request.form.get("venue_capacity")
@@ -284,23 +288,31 @@ def editvenue():
      venue_type=request.form.get("venue_type")
      venue_location=request.form.get("venue_location")
      venue_img = request.files['venue_img']
+     # Getting venue details based of id
      venue_details=db.session.query(venue).filter_by(id=venue_id).first()
+     # Setting all the values
      venue_details.name=venue_name
      venue_details.capacity=venue_capacity
      venue_details.pincode=venue_pincode
      venue_details.city=venue_location
      venue_details.venuetype=venue_type
+     # Saving changes to DB
      db.session.commit()
+     # Checking if user has uploaded File
      if venue_img.filename!='':
+        # Saving the new file uploaded by user
         extension = os.path.splitext(venue_img.filename)[1]
         filename=str(venue_id)+extension
         venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename))
      return redirect("/management/venue/edit")
   else:
+    # Get Request
+    # Check if a Venue is selected or not, if not display all venues
     if not venue_id:
       venue_details = db.session.query(venue).all()
       return render_template("Admin/VenueList.html",title="Venue List",venues=venue_details)
     else:
+      # Get a particular venue detail and present it
       venue_details = db.session.query(venue).filter_by(id=venue_id).first()
       return render_template("Admin/EditVenue.html",venue=venue_details)
 
@@ -332,37 +344,41 @@ def ticket_booking(event_id):
    event_details = db.session.query(show).filter_by(id=event_id).first()
    return render_template("Events/EventPage.html",event_details=event_details,title="Ticket Booking")
 
+# My orders page
 @app.route("/myorders",methods=['GET','POST'])
 @login_required
 def myorders():
    if request.method=="POST":
+      # Get the booking Id 
       booking_id=request.form.get('booking_id')
       userid=current_user.id
       bookings=select(userbooking.c.show_id,userbooking.c.ticket_count,userbooking.c.total_price).where(userbooking.c.booking_id == booking_id)
       bookings=db.session.execute(bookings)
       bookings=list(bookings)
+      # Getting the current show id selected by user
       show_id=bookings[0][0]
+      # Getting show details of show selected by user
       show_details=db.session.query(show).filter_by(id=show_id).first()
       return render_template("Orders/Ticket.html",event=show_details,bookings=bookings,booking_id=booking_id)
    else:
+    # Get Current user id 
     userid=current_user.id
+    # Get all the booking info of the current user
     bookings=select(userbooking.c.booking_id,userbooking.c.show_id,userbooking.c.ticket_count,userbooking.c.total_price).where(userbooking.c.user_id == userid)
     bookings=db.session.execute(bookings)
     show_id=[]
     bookings=list(bookings)
+    # Generating Show id list of shows booked by user
     for i in range (len(bookings)):
           show_id.append(bookings[i][1]) 
+    # Getting Shows the user has booked using in query
     show_details=db.session.query(show).filter(show.id.in_(show_id))
     show_details_dict={}
+    # Generating dictionary of id as key and details as value
     for i in show_details:
           show_details_dict[i.id]=i
     return render_template("Orders/OrdersPage.html",events=show_details_dict,bookings=bookings,numberofbookings=len(bookings))
 
-@app.route("/myorders/tickets")
-@login_required
-def ticket_view():
-   return render_template("Orders/Ticket.html",title="Ticket")
-   
 if __name__ == "__main__":
   app.run(debug=True)
 
