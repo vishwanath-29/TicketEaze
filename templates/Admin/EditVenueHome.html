@@ -1,0 +1,33 @@
+
+{% extends "./Layouts/layout.html" %}
+{% block content %}
+{% include "./Layouts/navBarWithoutLogin.html" %}
+{% block events %}
+<section class="w-100  bg-white p-5">
+  <div class="container">
+    <div class="row py-3">
+      <!-- <form action="/event/booktickets" method="post"> -->
+      {% for i in venues %}
+      <div class="col-md-6 col-lg-4 col-xl-3 my-md-2 my-sm-2">
+        <div class="card">
+          <img src="/static/file_uploads/event/{{i.id}}.jpeg" width="250px" height="250px" alt="Image 1" class="card-img-top">
+          <div class="card-body">
+            <h4 class="card-title">{{i.name}}</h4>
+            <p class="card-text">{{i.shortdescription}}</p>
+            <a href="/management/venue/edit?venue_id={{i.id}}" class="btn btn-primary" style="background: #DFFFD8; border-color:#a2ff8d; color: black;">Edit Details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+  
+
+</section>
+{% endblock events %}
+{% endblock content %}
+
+
+ <!-- User Logged in If 
+  {% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+{% endif %} -->
