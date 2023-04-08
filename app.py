@@ -61,8 +61,15 @@ def after_request(response):
 # Home page and Route 
 @app.route("/",methods=['GET','POST'])
 def home():
-  events = db.session.query(show).all() 
-  return render_template('Home/Home.html',events=events,title="Home")
+  if current_user.is_authenticated:
+    if session['user_type']=='admin':
+     return redirect("/management")
+    else:
+      events = db.session.query(show).all() 
+      return render_template('Home/Home.html',events=events,title="Home")
+  else:
+     events = db.session.query(show).all() 
+     return render_template('Home/Home.html',events=events,title="Home")
 
 # Register Route and Method
 @app.route("/register",methods=['GET','POST'])
@@ -176,10 +183,11 @@ def addevent():
      event_price=request.form.get("event_price")
      event_capacity=request.form.get("event_capacity")
      event_short_desc=request.form.get("event_short_desc")
+     event_type=request.form.get("event_type")
      # Getting Event Location based of Venue Selected 
      event_location=db.session.query(venue).filter_by(id=event_venue).first().city
      # Creating DB Object
-     event_details = show(name=event_name,description=event_desc,location=event_location,capacity=event_capacity,price=event_price,tags=tags,shortdescription=event_short_desc)
+     event_details = show(name=event_name,description=event_desc,location=event_location,capacity=event_capacity,price=event_price,tags=tags,shortdescription=event_short_desc,eventtype=event_type)
      # Adding value to Helper table by getting venue id and appending
      venue_details=db.session.query(venue).filter_by(id=event_venue).first()
      event_details.showshosted.append(venue_details)
@@ -268,10 +276,23 @@ def removevenue():
    return render_template("Admin/RemoveVenue.html",venues=venues,title="Venue Management")
 
 # Editing of Event
-@app.route("/management/event/edit")
+@app.route("/management/event/edit",methods=['GET','POST'])
 @admin_login_required
 def editevent():
-  return render_template("Admin/EditEvent.html",title="Event Management")
+  event_id=request.args.get('event_id')
+  if not event_id:
+      event_details = db.session.query(show).all()
+      return render_template("Admin/EventList.html",title="Event List",events=event_details)
+  else:
+      # Get a particular venue detail and present it
+      event_details = db.session.query(show).filter_by(id=event_id).first()
+      venue_id=select(showinvenue.c.venue_id).where(showinvenue.c.show_id == event_id)
+      venue_id=db.session.execute(venue_id)
+      venue_id=list(venue_id)
+      venue_id=venue_id[0][0]
+      venues = db.session.query(venue).all()
+      return render_template("Admin/EditEvent.html",title="Event Management",event=event_details,venue_id=venue_id,venues=venues)
+  return render_template("Admin/EventList.html",title="Event List")
 
 # Editing of Venues
 @app.route("/management/venue/edit",methods=['GET','POST'])
