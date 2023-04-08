@@ -280,19 +280,58 @@ def removevenue():
 @admin_login_required
 def editevent():
   event_id=request.args.get('event_id')
-  if not event_id:
-      event_details = db.session.query(show).all()
-      return render_template("Admin/EventList.html",title="Event List",events=event_details)
+  if request.method=='POST':
+    # Getting Values from Form
+     event_id=request.form.get("event_id")
+     event_name=request.form.get("event_name")
+     event_desc=request.form.get("event_desc")
+     tags=request.form.get("event_tags")
+     event_venue=request.form.get("event_venue")
+     event_price=request.form.get("event_price")
+     event_capacity=request.form.get("event_capacity")
+     event_short_desc=request.form.get("event_short_desc")
+     event_type=request.form.get("event_type")
+     # Getting Event Location based of Venue Selected 
+     event_location=db.session.query(venue).filter_by(id=event_venue).first().city
+     # Creating DB Object and assigning values
+     event_details = venue_details=db.session.query(show).filter_by(id=event_id).first()
+     event_details.name=event_name
+     event_details.description=event_desc
+     event_details.shortdescription=event_short_desc
+     event_details.tags=tags
+     event_details.location=event_location
+     event_details.capacity=event_capacity
+     event_details.price=event_price
+     event_details.eventtype=event_type
+     # Deleting Show in that Venue
+     d = delete(showinvenue).where(showinvenue.c.show_id == event_id)
+     db.session.execute(d)
+     # Adding value to Helper table by getting venue id and appending
+     venue_details=db.session.query(venue).filter_by(id=event_venue).first()
+     event_details.showshosted.append(venue_details)
+     db.session.add(event_details)
+     db.session.commit() 
+     db.session.flush() 
+     # Handling Event image
+     event_img = request.files['event_img']
+     if event_img.filename!='':
+      extension = os.path.splitext(event_img.filename)[1]
+      filename=str(event_details.id)+extension
+      event_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"event", filename)) 
+     return redirect('/management/event/edit')
   else:
-      # Get a particular venue detail and present it
-      event_details = db.session.query(show).filter_by(id=event_id).first()
-      venue_id=select(showinvenue.c.venue_id).where(showinvenue.c.show_id == event_id)
-      venue_id=db.session.execute(venue_id)
-      venue_id=list(venue_id)
-      venue_id=venue_id[0][0]
-      venues = db.session.query(venue).all()
-      return render_template("Admin/EditEvent.html",title="Event Management",event=event_details,venue_id=venue_id,venues=venues)
-  return render_template("Admin/EventList.html",title="Event List")
+    if not event_id:
+        event_details = db.session.query(show).all()
+        return render_template("Admin/EventList.html",title="Event List",events=event_details)
+    else:
+        # Get a particular venue detail and present it
+        event_details = db.session.query(show).filter_by(id=event_id).first()
+        venue_id=select(showinvenue.c.venue_id).where(showinvenue.c.show_id == event_id)
+        venue_id=db.session.execute(venue_id)
+        venue_id=list(venue_id)
+        venue_id=venue_id[0][0]
+        venues = db.session.query(venue).all()
+        return render_template("Admin/EditEvent.html",title="Event Management",event=event_details,venue_id=venue_id,venues=venues)
 
 # Editing of Venues
 @app.route("/management/venue/edit",methods=['GET','POST'])
