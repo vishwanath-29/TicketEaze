@@ -1,8 +1,7 @@
-from flask import Flask, render_template , request , redirect ,session ,flash,url_for
+from flask import Flask, render_template, request, redirect, session, flash
 from flask_login import login_user,LoginManager,current_user,logout_user,login_required
 from flask_migrate import Migrate
 from flask_session import Session
-from werkzeug.utils import secure_filename
 from sqlalchemy import delete,select,insert
 
 from models import *
