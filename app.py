@@ -52,7 +52,11 @@ def init():
     db.create_all()
     session.clear()
     logout_user()
-    
+
+@app.after_request
+def after_request(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
 
 # Home page and Route 
 @app.route("/",methods=['GET','POST'])
@@ -271,7 +275,13 @@ def editevent():
 @app.route("/management/venue/edit")
 @admin_login_required
 def editvenue():
-  return render_template("Admin/EditVenue.html",title="Venue Management")
+  venue_id=request.args.get('venue_id')
+  if not venue_id:
+    venue_details = db.session.query(venue).all()
+    return render_template('Admin/EditVenueHome.html',venues=venue_details,title="Home")
+  else:
+     venue_details = db.session.query(venue).filter_by(id=venue_id).first()
+     return render_template("Admin/EditVenue.html",venue=venue_details)
 
 
 # Ticket Booking Functionality 
