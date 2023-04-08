@@ -272,16 +272,33 @@ def removevenue():
 def editevent():
   return render_template("Admin/EditEvent.html",title="Event Management")
 
-@app.route("/management/venue/edit")
+@app.route("/management/venue/edit",methods=['GET','POST'])
 @admin_login_required
 def editvenue():
   venue_id=request.args.get('venue_id')
-  if not venue_id:
-    venue_details = db.session.query(venue).all()
-    return render_template('Admin/EditVenueHome.html',venues=venue_details,title="Home")
+  if request.method=='POST':
+     venue_id=request.form.get('venue_id')
+     venue_name=request.form.get("venue_name")
+     venue_capacity=request.form.get("venue_capacity")
+     venue_pincode=request.form.get("venue_pincode")
+     venue_type=request.form.get("venue_type")
+     venue_location=request.form.get("venue_location")
+     venue_img = request.files['venue_img']
+     if venue_img.filename!='':
+        print(venue_id)
+        extension = os.path.splitext(venue_img.filename)[1]
+        filename=str(venue_id)+extension
+        venue_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"venue", filename))
+     else:
+        print("no image")
+     return redirect("/management/venue/edit")
   else:
-     venue_details = db.session.query(venue).filter_by(id=venue_id).first()
-     return render_template("Admin/EditVenue.html",venue=venue_details)
+    if not venue_id:
+      venue_details = db.session.query(venue).all()
+      return render_template("Admin/VenueList.html",title="Venue List",venues=venue_details)
+    else:
+      venue_details = db.session.query(venue).filter_by(id=venue_id).first()
+      return render_template("Admin/EditVenue.html",venue=venue_details)
 
 
 # Ticket Booking Functionality 
